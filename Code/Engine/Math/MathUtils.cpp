@@ -121,6 +121,10 @@ int RangeMapInt(int inValue, int inStart, int inEnd, int outStart, int outEnd) {
 	return outRelativeToStart + outStart;
 }
 
+u8 RangeMapChar(u8 inValue, int inStart, int inEnd, int outStart, int outEnd) {
+	return (u8)RangeMapInt((int)inValue, inStart, inEnd, outStart, outEnd);
+}
+
 float RoundAngle(float angle) {
 	while (angle > 180.f) {
 		angle -= 360.f;
@@ -159,33 +163,6 @@ float TurnToward(float currentDegrees, float goalDegrees, float maxTurnDegrees) 
 	return currentDegrees;
 }
 
-bool AreBitsSet(unsigned char bitFlags8, unsigned char flagsToCheck) {
-	return (bitFlags8 & flagsToCheck) == flagsToCheck;
-}
-
-bool AreBitsSet(unsigned short bitFlags16, unsigned short flagsToCheck) {
-	return (bitFlags16 & flagsToCheck) == flagsToCheck;
-}
-
-bool AreBitsSet(unsigned int bitFlags32, unsigned int flagsToCheck) {
-	return (bitFlags32 & flagsToCheck) == flagsToCheck;
-}
-
-void SetBits(unsigned char& bitFlag8, unsigned char flagsToSet) {
-	bitFlag8 |= flagsToSet;
-}
-
-void SetBits(unsigned int& bitFlags32, unsigned int flagsToSet) {
-	bitFlags32 |= flagsToSet;
-}
-
-void ClearBits(unsigned char& bitFlags8, unsigned char flagsToClear) {
-	bitFlags8 &= ~flagsToClear;
-}
-
-void ClearBits(unsigned int & bitFlags32, unsigned int flagToClear) {
-	bitFlags32 &= ~flagToClear;
-}
 
 float SmoothStart2(float t) {
 	return t * t;
@@ -367,4 +344,12 @@ Vector3 CalculateBiTangent(const Vector3& deltaPos1, const Vector3& deltaPos2, c
 
 	return bitangent;
 
+}
+
+bool ApproxEqual(float a, float b, float epsilon /*= std::numeric_limits<float>::epsilon()*/) {
+	return std::abs(a - b) <= std::max(std::abs(a), std::abs(b)) * epsilon;
+}
+
+bool StrictlyLess(float a, float b, float epsilon /*= std::numeric_limits<float>::epsilon()*/) {
+	return (b - a) > std::max(std::abs(a), std::abs(b)) * epsilon;
 }

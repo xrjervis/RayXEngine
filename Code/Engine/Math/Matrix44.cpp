@@ -1,8 +1,8 @@
 #include "Engine/Math/Matrix44.hpp"
 #include "Engine/Math/MathUtils.hpp"
 
-Matrix44 Matrix44::Mat_GameToEngine = Matrix44();
-Matrix44 Matrix44::Mat_Game = Matrix44();
+Matrix44 Matrix44::GameToEngine = Matrix44();
+Matrix44 Matrix44::EngineToGame = Matrix44();
 
 Matrix44::Matrix44(const float* sixteenValuesBasisMajor) {
 	SetValues(sixteenValuesBasisMajor);

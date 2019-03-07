@@ -53,9 +53,9 @@ const u8 InputSystem::KEYBOARD_W =				'W';
 const u8 InputSystem::KEYBOARD_X =				'X';
 const u8 InputSystem::KEYBOARD_Y =				'Y';
 const u8 InputSystem::KEYBOARD_Z =				'Z';
-const u8 InputSystem::MOUSE_LEFT =				VK_LBUTTON;
-const u8 InputSystem::MOUSE_RIGHT =				VK_RBUTTON;
-const u8 InputSystem::MOUSE_MIDDLE =			VK_SHIFT;
+const u8 InputSystem::MOUSE_LEFT =				0;
+const u8 InputSystem::MOUSE_MIDDLE =			1;
+const u8 InputSystem::MOUSE_RIGHT =				2;
 
 
 //-----------------------------------------------------------------------------------------------
@@ -97,13 +97,20 @@ void InputSystem::OnKeyPressed(u8 keyCode) {
 }
 
 void InputSystem::OnKeyReleased(u8 keyCode) {
-	// left & right button release
-	if (keyCode == 0U) {
-		OnKeyReleased(InputSystem::MOUSE_LEFT);
-		OnKeyReleased(InputSystem::MOUSE_RIGHT);
-	}
 	m_keyStates[keyCode].m_isKeyPressed = false;
 	m_keyStates[keyCode].m_wasKeyJustReleased = true;
+}
+
+void InputSystem::OnMousePressed(u8 keyCode) {
+	if (m_mouseStates[keyCode].m_isKeyPressed == false) {
+		m_mouseStates[keyCode].m_isKeyPressed = true;
+		m_mouseStates[keyCode].m_wasKeyJustPressed = true;
+	}
+}
+
+void InputSystem::OnMouseReleased(u8 keyCode) {
+	m_mouseStates[keyCode].m_isKeyPressed = false;
+	m_mouseStates[keyCode].m_wasKeyJustReleased = true;
 }
 
 bool InputSystem::IsKeyPressed(u8 keyCode) const {
@@ -118,6 +125,18 @@ bool InputSystem::WasKeyJustReleased(u8 keyCode) const {
 	return m_keyStates[keyCode].m_wasKeyJustReleased;
 }
  
+bool InputSystem::IsMousePressed(u8 keyCode) const {
+	return m_mouseStates[keyCode].m_isKeyPressed;
+}
+
+bool InputSystem::WasMouseJustPressed(u8 keyCode) const {
+	return m_mouseStates[keyCode].m_wasKeyJustPressed;
+}
+
+bool InputSystem::WasMouseJustReleased(u8 keyCode) const {
+	return m_mouseStates[keyCode].m_wasKeyJustReleased;
+}
+
 u8 InputSystem::GetKeyCodeFromName(const std::string& name) const {
 	if (name == "A")	return KEYBOARD_A;
 	if (name == "B")	return KEYBOARD_B;
@@ -155,12 +174,12 @@ Vector2 InputSystem::GetMouseDelta() const{
 	return m_mousePosThisFrame - m_mousePosLastFrame;
 }
 
-Vector2 InputSystem::GetMouseClientPos() const {
+Vector2 InputSystem::GetMouseClientPos(void* handle) const {
 	POINT desktopPos;
 	::GetCursorPos(&desktopPos);
-	HWND hwnd = (HWND)::GetActiveWindow();
-	::ScreenToClient(hwnd, &desktopPos);
 	POINT clientPos = desktopPos;
+	HWND hwnd = (HWND)handle;
+	::ScreenToClient(hwnd, &clientPos);
 
 	return Vector2(clientPos.x, clientPos.y);
 }
@@ -239,11 +258,17 @@ eMouseMode InputSystem::GetMouseMode() const {
 
 void InputSystem::UpdateMouse() {
 	m_mousePosLastFrame = m_mousePosThisFrame;
-	m_mousePosThisFrame = GetMouseClientPos();
+	HWND hwnd = (HWND)::GetActiveWindow();
+	m_mousePosThisFrame = GetMouseClientPos(hwnd);
 
 	if (m_mouseMode == MOUSEMODE_SNAP) {
 		m_mousePosLastFrame = GetCenterOfClientWindow();
 		SetMouseClientPos(m_mousePosLastFrame);
+	}
+
+	for (int keyCode = 0; keyCode < 3; ++keyCode) {
+		m_mouseStates[keyCode].m_wasKeyJustPressed = false;
+		m_mouseStates[keyCode].m_wasKeyJustReleased = false;
 	}
 }
 

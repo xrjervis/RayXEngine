@@ -190,7 +190,7 @@ void Profiler::Update() {
 
 void Profiler::UpdateInput() {
 	// Recalculate mouse position
-	Vector2 mousePos = g_theInput->GetMouseClientPos();
+	Vector2 mousePos = g_theInput->GetMouseClientPos(nullptr);
 	mousePos.y = m_dimension.y - mousePos.y;
 	m_mousePos = mousePos;
 

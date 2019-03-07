@@ -51,6 +51,7 @@ public: // NOTE: this is one of the few cases where we break both the "m_" namin
 	static Vector2 ZERO;
 };
 
+float	CrossProduct(const Vector2& a, const Vector2& b);
 float	DotProduct(const Vector2& a, const Vector2&b);
 float	GetDistance(const Vector2& a, const Vector2& b);
 float	GetDistanceSquared(const Vector2& a, const Vector2& b);
@@ -69,3 +70,6 @@ void DecomposeVectorIntoBasis(const Vector2& originalVector,
 
 const Vector2 Interpolate(const Vector2& start, const Vector2& end, float fractionTowardEnd);
 const Vector2 Reflect(const Vector2& originalVector, const Vector2 normalVector);
+
+bool DoLineSegmentsIntersect(const Vector2& p0, const Vector2& p1, const Vector2& q0, const Vector2& q1, Vector2& intersectPoint);
+bool DoRayAndLineSegmentsIntersect(const Vector2& rayStart, const Vector2& rayDir, const Vector2& l0, const Vector2& l1, Vector2& intersectPoint);

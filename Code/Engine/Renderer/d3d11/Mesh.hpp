@@ -20,6 +20,7 @@ public:
 	void AddQuad(const Vector2& position, const Vector2& pivot, float width, float height, const AABB2& uv = AABB2(), const Rgba& color = Rgba::WHITE); // a 2d screen space quad, differed from plane
 
 	void AddCube(const Vector3& center, const Vector3& size, const Rgba& color = Rgba::WHITE);
+	void AddPoint3D(const Vector3& center, const Rgba& color = Rgba::WHITE);
 	void AddQuad3D(const Vector3& position, float width, float height, const Vector3& rightVector, const Vector3& upVector, const Rgba& color = Rgba::WHITE); // position is its the bottom left corner
 	void AddQuad3D(const Vector3& position, float width, float height, const Vector3& rightVector, const Vector3& upVector, const AABB2& uv = AABB2(), const Rgba& color = Rgba::WHITE); // position is its the bottom left corner
 

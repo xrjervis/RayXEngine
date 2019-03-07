@@ -18,9 +18,16 @@ public:
 
 	void OnKeyPressed(u8 keyCode);
 	void OnKeyReleased(u8 keyCode);
+	void OnMousePressed(u8 keyCode);
+	void OnMouseReleased(u8 keyCode);
+
 	bool IsKeyPressed(u8 keyCode) const;
 	bool WasKeyJustPressed(u8 keyCode) const;
 	bool WasKeyJustReleased(u8 keyCode) const;
+
+	bool IsMousePressed(u8 keyCode) const;
+	bool WasMouseJustPressed(u8 keyCode) const;
+	bool WasMouseJustReleased(u8 keyCode) const;
 
 	u8	 GetKeyCodeFromName(const std::string& name) const;
 
@@ -31,7 +38,7 @@ public:
 	eMouseMode GetMouseMode() const;
 	void UpdateMouse();
 	Vector2 GetMouseDelta() const;
-	Vector2 GetMouseClientPos() const;
+	Vector2 GetMouseClientPos(void* handle) const;
 	void SetMouseMode(eMouseMode mode);
 	void ShowCursor(bool isShow);
 	void LockCursor(bool isLock);
@@ -89,8 +96,8 @@ public:
 	static const u8		KEYBOARD_Z;
 	static const u8		KEYBOARD_TILDE;
 	static const u8		MOUSE_LEFT;
-	static const u8		MOUSE_RIGHT;
 	static const u8		MOUSE_MIDDLE;
+	static const u8		MOUSE_RIGHT;
 
 
 protected:
@@ -102,6 +109,8 @@ protected:
 
 protected:
 	KeyButtonState m_keyStates[NUM_KEYS];
+	KeyButtonState m_mouseStates[3];
+
 	XboxController m_controllers[NUM_CONTROLLERS];
 
 	Vector2 m_mousePosThisFrame = Vector2::ZERO;

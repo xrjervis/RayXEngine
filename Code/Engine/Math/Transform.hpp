@@ -12,7 +12,7 @@ public:
 
 	Matrix44 GetWorldMatrix();					// Matrix that transform a point from local space into world space
 	Matrix44 GetLocalMatrix();					// Matrix that transform a point from world space into local space
-	Vector3 GetWorldPosition();					// The position of the transform in world space
+	Vector3 GetWorldPosition() ;			// The position of the transform in world space
 	Vector3 GetWorldEulerAngles();				// The rotation as Euler angles in degrees
 	Vector3 GetLocalPosition() const;			// Position of the transform relative to the parent transform
 	Vector3 GetLocalEulerAngles() const;		// The rotation as Euler angles in degrees relative to the parent transform's rotation
@@ -43,7 +43,7 @@ private:
 	Matrix44 CalculateLocalToParentMatrix() const;
 
 public:
-	bool m_isDirty = true;
+	mutable bool m_isDirty = true;
 
 private:
 	Vector3 m_localPosition;

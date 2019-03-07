@@ -50,14 +50,11 @@ Matrix44 Transform::CalculateLocalToParentMatrix() const {
 }
 
 Matrix44 Transform::GetWorldMatrix() {
-	if (m_isDirty) {
-		if (m_parent == nullptr) {
-			m_worldMatrix = CalculateLocalToParentMatrix();
-		}
-		else {
-			m_worldMatrix = CalculateLocalToParentMatrix() * m_parent->GetWorldMatrix();
-		}
-		m_isDirty = false;
+	if (m_parent == nullptr) {
+		m_worldMatrix = CalculateLocalToParentMatrix();
+	}
+	else {
+		m_worldMatrix = CalculateLocalToParentMatrix() * m_parent->GetWorldMatrix();
 	}
 	return m_worldMatrix;
 }

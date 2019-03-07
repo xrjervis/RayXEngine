@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine/Core/CommandDefinition.hpp"
 #include "Engine/Core/ThreadSafeContainer.hpp"
+#include "Engine/Core/Camera.hpp"
 #include "Engine/Core/struct.hpp"
 #include <vector>
 #include <memory>
@@ -9,7 +10,6 @@
 typedef void(*console_printf_cb)(const std::string& data);
 
 class StopWatch;
-class Camera;
 class RHIOutput;
 
 class DevConsole {
@@ -75,6 +75,7 @@ public:
 
 private:
 	RHIOutput*					m_output = nullptr;
+	std::unique_ptr<Camera> 	m_camera;
 	bool						m_isOpen;
 	bool						m_isSelecting;
 	int							m_lineCount;

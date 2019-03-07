@@ -9,29 +9,26 @@ class RHIDevice;
 
 class RHIOutput{
 public:
-	RHIOutput(RHIDevice* device, const std::wstring& windowTitle, float height, float aspect);
+	RHIOutput(RHIDevice* device, const std::wstring& windowTitle, eWindowMode mode, float aspect);
 	~RHIOutput();
 
 	Window*							GetWindow() const { return m_window.get(); }
 	RenderTargetView*				GetRTV() const { return m_renderTargetTexture->m_rtv.get(); }
 	DepthStencilView*				GetDSV() const { return m_depthStencilTexture->m_dsv.get(); }
-	float							GetWidth() const { return m_backBufferWidth; }
-	float							GetHeight() const { return m_backBufferHeight; }
-	Vector2							GetCenter() const { return Vector2(m_backBufferWidth * 0.5f, m_backBufferHeight * 0.5f); }
-	Vector2							GetDimension() const { return Vector2(m_backBufferWidth, m_backBufferHeight); }
-	float							GetAspect() const { return m_backBufferWidth / m_backBufferHeight; }
+	float							GetWidth() const { return m_window->GetClientWidth(); }
+	float							GetHeight() const { return m_window->GetClientHeight(); }
+	Vector2							GetCenter() const { return Vector2(m_window->GetClientWidth() * 0.5f, m_window->GetClientHeight() * 0.5f); }
+	Vector2							GetDimension() const { return Vector2(m_window->GetClientWidth(), m_window->GetClientHeight()); }
+	float							GetAspect() const { return m_window->GetClientWidth() / m_window->GetClientHeight(); }
 	void							SwapBuffer();
 
 private:
 	void							CreateSwapChain();
-	void							CreateOutputWindow(const std::wstring& windowTitle, float height, float aspect);
+	void							CreateOutputWindow(const std::wstring& windowTitle, eWindowMode mode, float aspect);
 	void							CreateRenderTarget();
 	void							CreateDepthStencilTarget();
 
 public:
-	float							m_backBufferWidth;
-	float							m_backBufferHeight;
-
 	ComPtr<IDXGISwapChain1>			m_swapChain;
 	std::unique_ptr<Window>			m_window;
 	RHIDevice*						m_device = nullptr;

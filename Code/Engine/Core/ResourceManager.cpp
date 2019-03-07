@@ -15,10 +15,6 @@ void ResourceManager::LoadTexture2D(const std::string& name, const std::string& 
 	m_texture2Ds.insert({ name, std::move(texture) });
 }
 
-Texture2D* ResourceManager::GetTexture2D(const std::string& name) {
-	return m_texture2Ds.at(name).get();
-}
-
 void ResourceManager::LoadShaderProgram(const std::string& name, const std::string& filePath, eShaderType type) {
 	if (m_shaderPrograms.find(name) != m_shaderPrograms.end()) {
 		return;
@@ -34,9 +30,7 @@ void ResourceManager::LoadShaderProgram(const std::string& name, const std::stri
 	m_shaderPrograms.insert({ name, std::move(shaderProgram) });
 }
 
-ShaderProgram* ResourceManager::GetShaderProgram(const std::string& name) {
-	return m_shaderPrograms.at(name).get();
-}
+
 
 void ResourceManager::LoadMaterial(const std::string& name, const std::string& filePath) {
 	if (m_materials.find(name) != m_materials.end()) {
@@ -127,10 +121,6 @@ void ResourceManager::LoadMaterial(const std::string& name, const std::string& f
 	}	
 }
 
-Material* ResourceManager::GetMaterial(const std::string& name) {
-	return m_materials.at(name).get();
-}
-
 
 void ResourceManager::LoadSampler(const std::string& name) {
 	if (m_samplers.find(name) != m_samplers.end()) {
@@ -149,10 +139,6 @@ void ResourceManager::LoadSampler(const std::string& name) {
 	}
 }
 
-Sampler* ResourceManager::GetSampler(const std::string& name) {
-	return m_samplers.at(name).get();
-}
-
 void ResourceManager::LoadSpriteSheet(const std::string& name, const std::string& filePath, const IntVector2& layout) {
 	if (m_spriteSheets.find(name) != m_spriteSheets.end()) {
 		return;
@@ -162,10 +148,6 @@ void ResourceManager::LoadSpriteSheet(const std::string& name, const std::string
 	Texture2D* texture = GetTexture2D(name);
 	Uptr<SpriteSheet> newSpriteSheet = std::make_unique<SpriteSheet>(texture, layout);
 	m_spriteSheets.insert({ name, std::move(newSpriteSheet) });
-}
-
-SpriteSheet* ResourceManager::GetSpriteSheet(const std::string& name) {
-	return m_spriteSheets.at(name).get();
 }
 
 // void ResourceManager::LoadSpriteSheet(const std::string& name, const std::string& filePath, const IntVector2& layout) {

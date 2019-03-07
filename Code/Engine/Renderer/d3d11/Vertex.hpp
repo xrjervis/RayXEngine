@@ -34,6 +34,6 @@ struct VertexMaster {
 
 // 	Vector4 m_boneWeights;
 // 	Vector4 m_boneIndices;
-
-	static std::vector<D3D11_INPUT_ELEMENT_DESC> s_layoutDescs;
+	static std::vector<D3D11_INPUT_ELEMENT_DESC> s_layout_PCU;
+	static std::vector<D3D11_INPUT_ELEMENT_DESC> s_layout_PCUTBN;
 };

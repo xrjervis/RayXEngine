@@ -6,6 +6,6 @@ Buffer::Buffer(RHIDevice* device)
 }
 
 Buffer::~Buffer() {
-
+	m_d3d11Buffer.Reset();
 }
 

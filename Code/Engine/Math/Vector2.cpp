@@ -100,7 +100,7 @@ void Vector2::operator=(const Vector2& copyFrom) {
 
 //-----------------------------------------------------------------------------------------------
 bool Vector2::operator==(const Vector2& compare) const {
-	if(this->x == compare.x && this->y == compare.y){
+	if(ApproxEqual(this->x, compare.x, 0.0001f) && ApproxEqual(this->y, compare.y, 0.0001f)){
 		return true;
 	}
 	else{
@@ -172,6 +172,10 @@ IntVector2 Vector2::GetAsIntVector2() const {
 	return IntVector2((int)x, (int)y);
 }
 
+float CrossProduct(const Vector2& a, const Vector2& b) {
+	return (a.x * b.y - a.y * b.x);
+}
+
 float DotProduct(const Vector2& a, const Vector2& b) {
 	return (a.x * b.x) + (a.y * b.y);
 }
@@ -215,4 +219,35 @@ const Vector2 Interpolate(const Vector2& start, const Vector2& end, float fracti
 const Vector2 Reflect(const Vector2& originalVector, const Vector2 normalVector) {
 	Vector2 vecOntoNormal = GetProjectedVector(originalVector, normalVector);
 	return originalVector - 2 * vecOntoNormal;
+}
+
+bool DoLineSegmentsIntersect(const Vector2& p0, const Vector2& p1, const Vector2& q0, const Vector2& q1, Vector2& intersectPoint) {
+	Vector2 line1 = p1 - p0;
+	Vector2 line2 = q1 - q0;
+
+	float t;
+	float u;
+
+	t = CrossProduct((q0 - p0), line2) / CrossProduct(line1, line2);
+	u = CrossProduct((q0 - p0), line1) / CrossProduct(line1, line2);
+
+	if (-0.0001f <= t && t <= 1.0001f && -0.0001f <= u && u <= 1.0001f) {
+		intersectPoint = p0 + t * line1;
+		return true;
+	}
+	return false;
+}
+
+bool DoRayAndLineSegmentsIntersect(const Vector2& rayStart, const Vector2& rayDir, const Vector2& l0, const Vector2& l1, Vector2& intersectPoint) {
+
+	Vector2 line = l1 - l0;
+	float t;
+	t = CrossProduct((rayStart - l0), rayDir) / CrossProduct(line, rayDir);
+	if (-0.0001f <= t && t <= 1.0001f) {
+		intersectPoint = l0 + t * line;
+		if (DotProduct(intersectPoint - rayStart, rayDir) > 0.f) {
+			return true;
+		}
+	}
+	return false;
 }

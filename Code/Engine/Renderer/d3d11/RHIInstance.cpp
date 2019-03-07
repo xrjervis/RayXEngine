@@ -12,7 +12,12 @@ RHIInstance::RHIInstance() {
 }
 
 RHIInstance::~RHIInstance() {
-
+	m_device.reset();
+	m_fontRenderer.reset();
+	m_immediateRenderer.reset();
+#if defined(_DEBUG)  
+	m_debugInterface->ReportLiveDeviceObjects(D3D11_RLDO_DETAIL);
+#endif
 }
 
 bool RHIInstance::CreateDeviceAndContext(const HardwareDeviceInfo_t& hardwareInfo) {
@@ -44,7 +49,7 @@ bool RHIInstance::CreateDeviceAndContext(const HardwareDeviceInfo_t& hardwareInf
 	HRESULT hr = ::D3D11CreateDevice(
 		adapter.Get(),
 		D3D_DRIVER_TYPE_UNKNOWN,
-		0,
+		nullptr,
 		creationFlags,
 		featureLevels.data(),
 		numFeatureLevels,
@@ -63,6 +68,10 @@ bool RHIInstance::CreateDeviceAndContext(const HardwareDeviceInfo_t& hardwareInf
 
 	HR(device.As(&m_device->m_d3d11Device));
 	HR(context.As(&m_device->m_d3d11Context));
+
+	//--------------------------------------------------------------------
+	// Acquire the debug interface
+	HR(m_device->m_d3d11Device->QueryInterface(IID_PPV_ARGS(m_debugInterface.GetAddressOf())));
 
 	return true;
 }

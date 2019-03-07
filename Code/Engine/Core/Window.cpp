@@ -1,62 +1,36 @@
 #define WIN32_LEAN_AND_MEAN		// Always #define this before #include <windows.h>
 #include <windows.h>			// #include this (massive, platform-specific) header in very few places
 #include <algorithm>
+#include <windowsx.h>
+#include <dwmapi.h>
+#pragma comment(lib, "dwmapi.lib")
+
 #include "Engine/Core/Window.hpp"
 #include "Engine/InputSystem/InputSystem.hpp"
 #include "Engine/Core/ErrorWarningAssert.hpp"
 
-Window::Window(const std::wstring& title, eWindowMode mode, float fractionToDesktop, float clientAspect /*= 1.f*/) 
-	: m_title(title) {
-	RegisterWindowClass();
-	ComputeDesktopSize();
-	ComputeClientSizeFromAspect();
-	CreateAndShowWindow();
-	SetTitle(title);
-	Adjust(mode, fractionToDesktop, clientAspect);
-}
+//https://github.com/melak47/BorderlessWindow/blob/master/BorderlessWindow/src/BorderlessWindow.cpp
+// we cannot just use WS_POPUP style
+// WS_THICKFRAME: without this the window cannot be resized and so aero snap, de-maximizing and minimizing won't work
+// WS_SYSMENU: enables the context menu with the move, close, maximize, minize... commands (shift + right-click on the task bar item)
+// WS_CAPTION: enables aero minimize animation/transition
+// WS_MAXIMIZEBOX, WS_MINIMIZEBOX: enable minimize/maximize
+enum class Style : DWORD {
+	WINDOWED = WS_OVERLAPPEDWINDOW | WS_THICKFRAME | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX | WS_MAXIMIZEBOX,
+	BORDERLESS = WS_POPUP
+};
 
-Window::Window(const std::wstring& title, float clientHeight, float clientAspect) 
-	: m_title(title){
+Window::Window(const std::wstring& title, eWindowMode mode, float aspect) 
+	: m_title(title)
+	, m_mode(mode)
+	, m_aspect(aspect){
+
 	RegisterWindowClass();
-	ComputeDesktopSize();
 	CreateAndShowWindow();
-	SetTitle(title);
-	Adjust(WINDOW_MODE_WINDOWED, clientHeight / m_desktopHeight, clientAspect);
 }
 
 Window::~Window() {
 	::UnregisterClass(m_title.c_str(), ::GetModuleHandle(NULL));
-}
-
-void Window::ComputeDesktopSize() {
-	// Always getting the primary monitor's resolution
-
-	// Get desktop rect, dimensions, aspect
-	RECT desktopRect;
-	HWND desktopWindowHandle = ::GetDesktopWindow();
-	::GetClientRect(desktopWindowHandle, &desktopRect);
-	float desktopWidth = (float)(desktopRect.right - desktopRect.left);
-	float desktopHeight = (float)(desktopRect.bottom - desktopRect.top);
-	m_desktopWidth = desktopWidth;
-	m_desktopHeight = desktopHeight;
-}
-
-void Window::ComputeClientSizeFromAspect() {
-	// Calculate maximum client size (as some % of desktop size)
-	float clientWidth = m_desktopWidth * m_clientFractionToDesktop;
-	float clientHeight = m_desktopHeight * m_clientFractionToDesktop;
-	float desktopAspect = m_desktopWidth / m_desktopHeight;
-
-	if (m_clientAspect > desktopAspect) {
-		// Client window has a wider aspect than desktop; shrink client height to match its width
-		clientHeight = clientWidth / m_clientAspect;
-	}
-	else {
-		// Client window has a taller aspect than desktop; shrink client width to match its height
-		clientWidth = clientHeight * m_clientAspect;
-	}
-	m_clientWidth = clientWidth;
-	m_clientHeight = clientHeight;
 }
 
 void Window::RegisterWindowClass() {
@@ -65,8 +39,6 @@ void Window::RegisterWindowClass() {
 	wcex.cbSize = sizeof(WNDCLASSEX);
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = WndProc;
-	wcex.cbClsExtra = 0;
-	wcex.cbWndExtra = 0;
 	wcex.hInstance = (HINSTANCE)m_hInst;
 	wcex.hIcon = ::LoadIcon((HINSTANCE)m_hInst, (LPCTSTR)IDI_WINLOGO);
 	wcex.hCursor = ::LoadCursor(nullptr, IDC_ARROW);
@@ -80,18 +52,42 @@ void Window::RegisterWindowClass() {
 }
 
 void Window::CreateAndShowWindow() {
+	RECT desktopRect;
+	HWND desktopWindowHandle = ::GetDesktopWindow();
+	::GetClientRect(desktopWindowHandle, &desktopRect);
+	float desktopWidth = (float)(desktopRect.right - desktopRect.left);
+	float desktopHeight = (float)(desktopRect.bottom - desktopRect.top);
+
+	float fractionToDesktop;
+	if (m_mode == WINDOW_MODE_WINDOWED) {
+		fractionToDesktop = 0.8f;
+	}
+	else {
+		fractionToDesktop = 1.0f;
+	}
+	float clientHeight = desktopHeight * fractionToDesktop;
+	float clientWidth = clientHeight * m_aspect;
+
 	// Calculate client rect bounds by centering the client area
-	float clientMarginX = 0.5f * (m_desktopWidth - m_clientWidth);
-	float clientMarginY = 0.5f * (m_desktopHeight - m_clientHeight);
+	float clientMarginX = 0.5f * (desktopWidth - clientWidth);
+	float clientMarginY = 0.5f * (desktopHeight - clientHeight);
 	RECT clientRect = {};
 	clientRect.left = (int)clientMarginX;
-	clientRect.right = clientRect.left + (int)m_clientWidth;
+	clientRect.right = clientRect.left + (int)clientWidth;
 	clientRect.top = (int)clientMarginY;
-	clientRect.bottom = clientRect.top + (int)m_clientHeight;
+	clientRect.bottom = clientRect.top + (int)clientHeight;
 
 	// Calculate the outer dimensions of the physical window, including frame et. al.
-	const DWORD windowStyleFlags = WS_OVERLAPPEDWINDOW;
-	const DWORD windowStyleExFlags = WS_EX_APPWINDOW;
+	DWORD windowStyleFlags = WS_OVERLAPPEDWINDOW;
+	DWORD windowStyleExFlags = WS_EX_APPWINDOW;
+	if (m_mode == WINDOW_MODE_WINDOWED) {
+		windowStyleFlags = WS_OVERLAPPEDWINDOW;
+		windowStyleExFlags = WS_EX_APPWINDOW;
+	}
+	else {
+		windowStyleFlags = WS_POPUP;
+		windowStyleExFlags = WS_EX_APPWINDOW;
+	}
 	::AdjustWindowRectEx(&clientRect, windowStyleFlags, FALSE, windowStyleExFlags);
 	m_hWnd = CreateWindowEx(
 		windowStyleExFlags,
@@ -100,14 +96,17 @@ void Window::CreateAndShowWindow() {
 		windowStyleFlags,
 		clientRect.left,
 		clientRect.top,
-		(int)m_clientWidth,
-		(int)m_clientHeight,
+		(int)clientWidth,
+		(int)clientHeight,
 		nullptr,
 		nullptr,
 		(HINSTANCE)m_hInst,
 		nullptr);
 	if (!m_hWnd) {
 		ERROR_AND_DIE("Create window class failed!");
+	}
+	if (m_mode == WINDOW_MODE_BORDERLESS_FULLSCREEN) {
+		::SetWindowLongPtr((HWND)m_hWnd, GWL_STYLE, static_cast<LONG>(Style::BORDERLESS));
 	}
 	::SetWindowLongPtr((HWND)m_hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 	::ShowWindow((HWND)m_hWnd, SW_SHOW);
@@ -122,38 +121,39 @@ void Window::UnregisterHandler(WindowMessage_cb cb) {
 	listeners.erase(std::remove(listeners.begin(), listeners.end(), cb), listeners.end());
 }
 
-void Window::SetTitle(const std::wstring& newTitle) {
-	m_title = newTitle;
-	::SetWindowText((HWND)m_hWnd, (LPCTSTR)m_title.c_str());
+float Window::GetClientWidth() const {
+	RECT clientRect;
+	::GetClientRect((HWND)m_hWnd, &clientRect);
+	return (float)(clientRect.right - clientRect.left);
 }
 
-void Window::SetPosition(int topLeftX, int topLeftY) {
-	::SetWindowPos((HWND)m_hWnd, nullptr, topLeftX, topLeftY, (int)m_clientWidth, (int)m_clientHeight, SWP_SHOWWINDOW);
+float Window::GetClientHeight() const {
+	RECT clientRect;
+	::GetClientRect((HWND)m_hWnd, &clientRect);
+	return (float)(clientRect.bottom - clientRect.top);
 }
 
-void Window::Adjust(eWindowMode mode, float fractionToDesktop, float clientAspect /*= -1.f*/) {
-	m_mode = mode;
-	m_clientFractionToDesktop = fractionToDesktop;
-	if(clientAspect >= 0.f){
-		m_clientAspect = clientAspect;
+void Window::AdjustPositionAndSize(const Vector2& newPos, const Vector2& newSize) {
+	RECT clientRect = {};
+	clientRect.left = (int)newPos.x;
+	clientRect.right = clientRect.left + (int)newSize.x;
+	clientRect.top = (int)newPos.y;
+	clientRect.bottom = clientRect.top + (int)newSize.y;
+	DWORD windowStyleFlags = WS_OVERLAPPEDWINDOW;
+	DWORD windowStyleExFlags = WS_EX_APPWINDOW;
+	if (m_mode == WINDOW_MODE_WINDOWED) {
+		windowStyleFlags = WS_OVERLAPPEDWINDOW;
+		windowStyleExFlags = WS_EX_APPWINDOW;
 	}
-	switch (m_mode) {
-	case WINDOW_MODE_WINDOWED:
-		m_windowStyleFlags = WS_OVERLAPPEDWINDOW;
-		break;
-	case WINDOW_MODE_BORDERLESS_FULLSCREEN:
-		m_clientFractionToDesktop = 1.f;
-		m_clientAspect = m_desktopWidth / m_desktopHeight;
-		m_windowStyleFlags = WS_POPUP;
-		break;
+	else {
+		windowStyleFlags = WS_POPUP;
+		windowStyleExFlags = WS_EX_APPWINDOW;
 	}
+	::AdjustWindowRectEx(&clientRect, windowStyleFlags, FALSE, windowStyleExFlags);
+	::SetWindowPos((HWND)m_hWnd, nullptr, clientRect.left, clientRect.top, clientRect.right - clientRect.left, clientRect.bottom - clientRect.top, SWP_SHOWWINDOW | SWP_FRAMECHANGED);
+	::UpdateWindow((HWND)m_hWnd);
+}
 
-	ComputeClientSizeFromAspect();
-
-	// Calculate client rect bounds by centering the client area
-	float clientMarginX = 0.5f * (m_desktopWidth - m_clientWidth);
-	float clientMarginY = 0.5f * (m_desktopHeight - m_clientHeight);
-
-	::SetWindowLong((HWND)m_hWnd, GWL_STYLE, m_windowStyleFlags);
-	SetPosition((int)clientMarginX, (int)clientMarginY);
+void Window::SetTitle(const std::wstring& wstr) {
+	::SetWindowTextW((HWND)m_hWnd, wstr.c_str());
 }

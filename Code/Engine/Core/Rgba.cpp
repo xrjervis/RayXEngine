@@ -12,6 +12,7 @@ const u32 Rgba::BLUE = 0x0000FFFF;
 const u32 Rgba::YELLOW = 0xFFFF00FF;
 const u32 Rgba::GRAY = 0x808080FF;
 const u32 Rgba::MIDNIGHTBLUE = 0x003366FF;
+const u32 Rgba::PURPLE = 0xFF00FFFF;
 
 
 Rgba::Rgba() : r(0), g(0), b(0), a(255) {}
@@ -34,6 +35,14 @@ Rgba::Rgba(const u32 hexByte) {
 
 Rgba::Rgba(float red, float green, float blue, float alpha /*= 1.0f*/) {
 	SetAsFloats(red, green, blue, alpha);
+}
+
+
+Rgba::Rgba(int redByte, int greenByte, int blueByte, int alphaByte /*= 255u*/) {
+	r = static_cast<unsigned char>(redByte);
+	g = static_cast<unsigned char>(greenByte);
+	b = static_cast<unsigned char>(blueByte);
+	a = static_cast<unsigned char>(alphaByte);
 }
 
 void Rgba::SetAsBytes(u8 redByte, u8 greenByte, u8 blueByte, u8 alphaByte) {
@@ -64,10 +73,11 @@ Vector4 Rgba::GetAsFloats() const {
 	return vec4;
 }
 
-void Rgba::ScaleRGB(float rgbScale) {
+Rgba Rgba::ScaleRGB(float rgbScale) {
 	r = static_cast<unsigned char>(ClampFloat(static_cast<float>(r) * rgbScale, 0.f, 255.f));
 	g = static_cast<unsigned char>(ClampFloat(static_cast<float>(g) * rgbScale, 0.f, 255.f));
 	b = static_cast<unsigned char>(ClampFloat(static_cast<float>(b) * rgbScale, 0.f, 255.f));
+	return *this;
 }
 
 void Rgba::ScaleAlpha(float alphaScale) {
@@ -132,7 +142,7 @@ Vector3 Rgba::GetFloatRGB() const {
 	return Vector3(GetFloatR(), GetFloatG(), GetFloatB());
 }
 
-const Rgba Interpolate(const Rgba& start, const Rgba& end, float fractionTowardEnd) {
+Rgba Interpolate(const Rgba& start, const Rgba& end, float fractionTowardEnd) {
 	return Rgba(
 		Interpolate(start.r, end.r, fractionTowardEnd),
 		Interpolate(start.g, end.g, fractionTowardEnd),
@@ -141,7 +151,7 @@ const Rgba Interpolate(const Rgba& start, const Rgba& end, float fractionTowardE
 	);
 }
 
-const Rgba MoveTowards(const Rgba& current, const Rgba& target, float delta) {
+Rgba MoveTowards(const Rgba& current, const Rgba& target, float delta) {
 	return Rgba(
 		(unsigned char)MoveTowards(current.r, target.r, delta),
 		(unsigned char)MoveTowards(current.g, target.g, delta),

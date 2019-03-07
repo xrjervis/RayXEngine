@@ -4,7 +4,11 @@
 class RenderState {
 public:
 	RenderState() {}
-	~RenderState() {}
+	~RenderState() {
+		m_d3d11RasterizerState.Reset();
+		m_d3d11BlendState.Reset();
+		m_d3d11DepthStencilState.Reset();
+	}
 
 public:
 	union {

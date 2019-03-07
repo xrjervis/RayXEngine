@@ -5,7 +5,6 @@
 #include "Engine/Core/Window.hpp"
 #include "Engine/Core/StopWatch.hpp"
 #include "Engine/Core/Clock.hpp"
-#include "Engine/Core/Camera.hpp"
 #include "Engine/Core/ResourceManager.hpp"
 #include "Engine/InputSystem/InputSystem.hpp"
 #include "Engine/Profiler/ProfileScope.hpp"
@@ -37,6 +36,16 @@ DevConsole::DevConsole(RHIOutput* output)
 
 	SetFontSize(20.f);
 	SetLineCount();
+
+	//--------------------------------------------------------------------
+	// Create devConsole 2d camera
+	m_camera = std::make_unique<Camera>();
+	m_camera->SetViewport(0U, 0, 0, m_output->GetWidth(), m_output->GetHeight(), 0.f, 1.f);
+	m_camera->SetProjectionMode(ORTHOGRAPHIC);
+	m_camera->SetOrtho(Vector2::ZERO, Vector2(m_output->GetWidth(), m_output->GetHeight()), 0.f, 10.f);
+
+	m_camera->SetRenderTarget(m_output->GetRTV());
+	m_camera->SetDepthTarget(m_output->GetDSV());
 // 	g_theResourceManager->LoadSpriteSheet("morgana", L"Data/Images/morgana.png", IntVector2(4, 1));
 // 	g_theResourceManager->LoadSpriteAnimation(L"Data/Animations/morgana.spriteanim");
 //	m_spriteAnim = g_theResourceManager->GetSpriteAnimation("morgana_idle");
@@ -70,6 +79,12 @@ void DevConsole::Update(float deltaSeconds) {
 }
 
 void DevConsole::Render() {
+	g_theRHI->GetImmediateRenderer()->BindOutput(m_output);
+	g_theRHI->GetImmediateRenderer()->BindCamera(m_camera.get());
+
+	g_theRHI->GetFontRenderer()->BindOutput(m_output);
+	g_theRHI->GetImmediateRenderer()->BindMaterial(nullptr);
+
 	g_theRHI->GetDevice()->ClearColor(m_output->GetRTV(), Rgba::MIDNIGHTBLUE);
 	g_theRHI->GetDevice()->ClearDepthStencil(m_output->GetDSV(), 1.f, 0U);
 

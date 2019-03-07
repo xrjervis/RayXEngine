@@ -1,9 +1,11 @@
 #pragma once
-#include <cmath>
-#include <vector>
 #include "Engine/Math/Vector2.hpp"
 #include "Engine/Math/Vector3.hpp"
 #include "Engine/Core/type.hpp"
+#include <cmath>
+#include <vector>
+#include <limits>
+#include <algorithm>
 
 constexpr float PI = 3.141592653f;
 
@@ -52,23 +54,41 @@ float			MoveTowards(float current, float target, float maxDist);
 
 float			RangeMapFloat(float inValue, float inStart, float inEnd, float outStart, float outEnd);		// For a value in [inStart, inEnd], finds the corresponding value in [outStart, outEnd]
 int				RangeMapInt(int inValue, int inStart, int inEnd, int outStart, int outEnd);
+u8				RangeMapChar(u8 inValue, int inStart, int inEnd, int outStart, int outEnd);
 
 // Angle & Vector utilities
 float			RoundAngle(float angle);
 float			GetAngularDisplacement(float startDegrees, float endDegrees);					// Finds the "angular displacement" (or signed angular distance) from startDegrees to endDegrees in the smartest way
 float			TurnToward(float currentDegrees, float goalDegrees, float maxTurnDegrees);		// I face currentDegrees and want to turn "toward" goalDegrees, by up to maxTurnDegrees
 
-
-
 //Bitflag utilities
-bool			AreBitsSet(unsigned char bitFlags8, unsigned char flagsToCheck);
-bool			AreBitsSet(unsigned short bitFlags16, unsigned short flagsToCheck);
-bool			AreBitsSet(unsigned int bitFlags32, unsigned int flagsToCheck);
-void			SetBits(unsigned char& bitFlag8, unsigned char flagsToSet);
-void			SetBits(unsigned int& bitFlags32, unsigned int flagsToSet);
-void			ClearBits(unsigned char& bitFlags8, unsigned char flagsToClear);
-void			ClearBits(unsigned int& bitFlags32, unsigned int flagToClear);
+inline bool AreBitsSet(unsigned char bitFlags8, unsigned char flagsToCheck) {
+	return (bitFlags8 & flagsToCheck) == flagsToCheck;
+}
 
+inline bool AreBitsSet(unsigned short bitFlags16, unsigned short flagsToCheck) {
+	return (bitFlags16 & flagsToCheck) == flagsToCheck;
+}
+
+inline bool AreBitsSet(unsigned int bitFlags32, unsigned int flagsToCheck) {
+	return (bitFlags32 & flagsToCheck) == flagsToCheck;
+}
+
+inline void SetBits(unsigned char& bitFlag8, unsigned char flagsToSet) {
+	bitFlag8 |= flagsToSet;
+}
+
+inline void SetBits(unsigned int& bitFlags32, unsigned int flagsToSet) {
+	bitFlags32 |= flagsToSet;
+}
+
+inline void ClearBits(unsigned char& bitFlags8, unsigned char flagsToClear) {
+	bitFlags8 &= ~flagsToClear;
+}
+
+inline void ClearBits(unsigned int & bitFlags32, unsigned int flagToClear) {
+	bitFlags32 &= ~flagToClear;
+}
 
 //Easing functions
 float	SmoothStart2(float t); // 2nd-degree smooth start (a.k.a. quadratic ease in?
@@ -84,3 +104,8 @@ bool	QuadraticFormula(float a, float b, float c, std::vector<float>& results);
 // Normal Mapping Utils
 Vector3 CalculateTangent(const Vector3& deltaPos1, const Vector3& deltaPos2, const Vector2& deltaUV1, const Vector2& deltaUV2);
 Vector3 CalculateBiTangent(const Vector3& deltaPos1, const Vector3& deltaPos2, const Vector2& deltaUV1, const Vector2& deltaUV2);
+
+//floats comparison
+bool ApproxEqual(float a, float b, float epsilon = std::numeric_limits<float>::epsilon());
+
+bool StrictlyLess(float a, float b, float epsilon = std::numeric_limits<float>::epsilon());

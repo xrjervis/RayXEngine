@@ -8,6 +8,7 @@ class Rgba {
 public:
 	~Rgba() = default;
 	explicit Rgba();
+	explicit Rgba(int redByte, int greenByte, int blueByte, int alphaByte = 255);
 	explicit Rgba(u8 redByte, u8 greenByte, u8 blueByte, u8 alphaByte = 255u);
 	explicit Rgba(float red, float green, float blue, float alpha = 1.0f);
 	Rgba(const u32 hexByte);
@@ -15,7 +16,7 @@ public:
 	void SetAsBytes(u8 redByte, u8 greenByte, u8 blueByte, u8 alphaByte = 255);
 	void SetAsFloats(float normalizedRed, float normalizedGreen, float normalizedBlue, float normalizedAlpha = 1.0f);
 	Vector4 GetAsFloats() const;
-	void ScaleRGB(float rgbScale);
+	Rgba ScaleRGB(float rgbScale);
 	void ScaleAlpha(float alphaScale);
 	void SetFromText(const char* text);
 	bool RgbEqual(const Rgba& compare);
@@ -39,9 +40,10 @@ public:
 	static const u32 YELLOW;
 	static const u32 GRAY;
 	static const u32 MIDNIGHTBLUE;
+	static const u32 PURPLE;
 };
 
-const Rgba Interpolate(const Rgba& start, const Rgba& end, float fractionTowardEnd);
-const Rgba MoveTowards(const Rgba& current, const Rgba& target, float delta);
+Rgba Interpolate(const Rgba& start, const Rgba& end, float fractionTowardEnd);
+Rgba MoveTowards(const Rgba& current, const Rgba& target, float delta);
 
 bool operator>>(std::stringstream& ss, Rgba& toValue);

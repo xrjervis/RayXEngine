@@ -32,5 +32,6 @@ public:
 
 	std::vector<HardwareDeviceInfo_t>	m_hardwareDevices;
 	ComPtr<IDXGIFactory2>				m_dxgiFactory;
+	ComPtr<ID3D11Debug>					m_debugInterface;
 };
 

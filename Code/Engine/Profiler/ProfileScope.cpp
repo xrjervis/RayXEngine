@@ -11,7 +11,7 @@ LogProfileScope::LogProfileScope(const std::string& tag) {
 
 LogProfileScope::~LogProfileScope() {
 	u64 elapsed = GetPerformanceCounter() - m_startHPC;
-	DebuggerPrintf("[%s] took %.2f seconds.\n", m_tag.c_str(), PerformanceCountToSeconds(elapsed));
+	DebuggerPrintf("[%s] took %.2f ms.\n", m_tag.c_str(), PerformanceCountToSeconds(elapsed) * 1000.0);
 }
 
 ProfileScope::ProfileScope(const std::string& tag) 

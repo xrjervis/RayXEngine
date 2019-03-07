@@ -10,8 +10,8 @@ RHIDevice::~RHIDevice() {
 	m_d3d11Context->ClearState();
 }
 
-std::unique_ptr<RHIOutput> RHIDevice::CreateOutput(const std::wstring& windowTitle, float height, float aspect) {
-	std::unique_ptr<RHIOutput> output = std::make_unique<RHIOutput>(this, windowTitle, height, aspect);
+std::unique_ptr<RHIOutput> RHIDevice::CreateOutput(const std::wstring& windowTitle, eWindowMode mode, float aspect) {
+	std::unique_ptr<RHIOutput> output = std::make_unique<RHIOutput>(this, windowTitle, mode, aspect);
 	return output;
 }
 

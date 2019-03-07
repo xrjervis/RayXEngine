@@ -63,8 +63,8 @@ public:
 	float Kx = 0, Ky = 0, Kz = 1, Kw = 0;
 	float Tx = 0, Ty = 0, Tz = 0, Tw = 1;
 
-	static Matrix44 Mat_GameToEngine;
-	static Matrix44 Mat_Game;
+	static Matrix44 GameToEngine;
+	static Matrix44 EngineToGame;
 };
 
 Matrix44			Lerp(const Matrix44& a, const Matrix44& b, float t);

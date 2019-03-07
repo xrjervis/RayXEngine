@@ -8,7 +8,9 @@ Mesh::Mesh(ePrimitiveType primitiveType, bool useIndices)
 }
 
 Mesh::~Mesh() {
-
+	m_vertexBuffer.reset();
+	m_indexBuffer.reset();
+	m_inputLayout.reset();
 }
 
 void Mesh::Reset(ePrimitiveType primitiveType, bool useIndices /*= true*/) {
@@ -26,8 +28,8 @@ void Mesh::AddLine(const Vector3& startPos, const Vector3& endPos, const Rgba& c
 	GUARANTEE_OR_DIE(m_primitiveType == PRIMITIVE_TYPE_LINELIST || m_primitiveType == PRIMITIVE_TYPE_LINESTRIP, "Invalid primitive type");
 	GUARANTEE_OR_DIE(m_useIndices == false, "Cannot draw lines with using indices");
 
-	Vector3 newStart = (Vector4(startPos, 1.f) * Matrix44::Mat_GameToEngine).xyz();
-	Vector3 newEnd = (Vector4(endPos, 1.f) * Matrix44::Mat_GameToEngine).xyz();
+	Vector3 newStart = (Vector4(startPos, 1.f) * Matrix44::GameToEngine).xyz();
+	Vector3 newEnd = (Vector4(endPos, 1.f) * Matrix44::GameToEngine).xyz();
 
 	m_vertices.emplace_back(newStart, color.GetAsFloats(), Vector2(0.f, 0.f));
 	m_vertices.emplace_back(newEnd, color.GetAsFloats(), Vector2(0.f, 0.f));
@@ -52,6 +54,7 @@ void Mesh::AddQuad(const Vector2& position, const Vector2& pivot, float width, f
 	m_vertices.emplace_back(tl, c, tl_uv);
 	m_vertices.emplace_back(tr, c, tr_uv);
 
+	//ccw
 	m_triangles.push_back({ vertCount + 0, vertCount + 1, vertCount + 2 });
 	m_triangles.push_back({ vertCount + 1, vertCount + 3, vertCount + 2 });
 }
@@ -91,7 +94,7 @@ void Mesh::AddQuad(const Vector2& position, const Vector2& pivot, float width, f
 void Mesh::AddCube(const Vector3& center, const Vector3& size, const Rgba& color /*= Rgba::WHITE*/) {
 	Vector4 c = color.GetAsFloats();
 
-	Vector3 newCenter = (Vector4(center, 1.f) * Matrix44::Mat_GameToEngine).xyz();
+	Vector3 newCenter = (Vector4(center, 1.f) * Matrix44::GameToEngine).xyz();
 
 	//front vertices
 	Vector3 blfCorner = newCenter - (size * 0.5f);
@@ -166,11 +169,18 @@ void Mesh::AddCube(const Vector3& center, const Vector3& size, const Rgba& color
 	m_triangles.push_back({ vertCount + 21, vertCount + 23, vertCount + 22 });
 }
 
+void Mesh::AddPoint3D(const Vector3& center, const Rgba& color /*= Rgba::WHITE*/) {
+	Vector4 c = color.GetAsFloats();
+	Vector2 uv(0.f, 0.f);
+	Vector3 pos = (Vector4(center, 1.f) * Matrix44::GameToEngine).xyz();
+	m_vertices.emplace_back(pos, c, uv);
+}
+
 void Mesh::AddQuad3D(const Vector3& position, float width, float height, const Vector3& rightVector, const Vector3& upVector, const Rgba& color /*= Rgba::WHITE*/) {
 	Vector4 c = color.GetAsFloats();
-	Vector3 newPos = (Vector4(position, 1.f) * Matrix44::Mat_GameToEngine).xyz();
-	Vector3 newRight = (Vector4(rightVector, 0.f) * Matrix44::Mat_GameToEngine).xyz();
-	Vector3 newUp = (Vector4(upVector, 0.f) * Matrix44::Mat_GameToEngine).xyz();
+	Vector3 newPos = (Vector4(position, 1.f) * Matrix44::GameToEngine).xyz();
+	Vector3 newRight = (Vector4(rightVector, 0.f) * Matrix44::GameToEngine).xyz();
+	Vector3 newUp = (Vector4(upVector, 0.f) * Matrix44::GameToEngine).xyz();
 
 	Vector3 bl = newPos;
 	Vector3 br = bl + width * newRight;
@@ -194,9 +204,9 @@ void Mesh::AddQuad3D(const Vector3& position, float width, float height, const V
 
 void Mesh::AddQuad3D(const Vector3& position, float width, float height, const Vector3& rightVector, const Vector3& upVector, const AABB2& uv /*= AABB2()*/, const Rgba& color /*= Rgba::WHITE*/) {
 	Vector4 c = color.GetAsFloats();
-	Vector3 newPos = (Vector4(position, 1.f) * Matrix44::Mat_GameToEngine).xyz();
-	Vector3 newRight = (Vector4(rightVector, 0.f) * Matrix44::Mat_GameToEngine).xyz();
-	Vector3 newUp = (Vector4(upVector, 0.f) * Matrix44::Mat_GameToEngine).xyz();
+	Vector3 newPos = (Vector4(position, 1.f) * Matrix44::GameToEngine).xyz();
+	Vector3 newRight = (Vector4(rightVector, 0.f) * Matrix44::GameToEngine).xyz();
+	Vector3 newUp = (Vector4(upVector, 0.f) * Matrix44::GameToEngine).xyz();
 
 	Vector3 bl = newPos;
 	Vector3 br = bl + width * newRight;

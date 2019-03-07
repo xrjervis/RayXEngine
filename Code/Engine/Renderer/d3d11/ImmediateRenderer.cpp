@@ -19,10 +19,16 @@ ImmediateRenderer::ImmediateRenderer(RHIDevice* device)
 	m_camera_cBuffer = m_device->CreateConstantBuffer(sizeof(CameraBuffer_t), false, false, nullptr);
 
 	m_material_cBuffer = m_device->CreateConstantBuffer(sizeof(MaterialBuffer_t), false, false, nullptr);
+
+	m_global_cBuffer = m_device->CreateConstantBuffer(sizeof(GlobalBuffer_t), false, false, &m_globals);
 }
 
 ImmediateRenderer::~ImmediateRenderer() {
-
+	m_obj_cBuffer.reset();
+	m_material_cBuffer.reset();
+	m_light_cBuffer.reset();
+	m_camera_cBuffer.reset();
+	m_global_cBuffer.reset();
 }
 
 void ImmediateRenderer::DrawLine2D(const Vector2& startPos, const Vector2& endPos, const Rgba& color /*= Rgba::WHITE*/) {
@@ -31,10 +37,31 @@ void ImmediateRenderer::DrawLine2D(const Vector2& startPos, const Vector2& endPo
 	DrawMeshImmediate(&line);
 }
 
+void ImmediateRenderer::DrawLineBox2D(const AABB2& boxBounds, const Rgba& color /*= Rgba::WHITE*/) {
+	Mesh lines(PRIMITIVE_TYPE_LINELIST, false);
+	lines.AddLine(Vector2(boxBounds.mins.x, boxBounds.mins.y), Vector2(boxBounds.maxs.x, boxBounds.mins.y), color);
+	lines.AddLine(Vector2(boxBounds.maxs.x, boxBounds.mins.y), Vector2(boxBounds.maxs.x, boxBounds.maxs.y), color);
+	lines.AddLine(Vector2(boxBounds.maxs.x, boxBounds.maxs.y), Vector2(boxBounds.mins.x, boxBounds.maxs.y), color);
+	lines.AddLine(Vector2(boxBounds.mins.x, boxBounds.maxs.y), Vector2(boxBounds.mins.x, boxBounds.mins.y), color);
+	DrawMeshImmediate(&lines);
+}
+
 void ImmediateRenderer::DrawQuad2D(const Vector2& position, const Vector2& pivot, const Vector2& size, const Rgba& color) {
 	Mesh quad(PRIMITIVE_TYPE_TRIANGLELIST, true);
 	quad.AddQuad(position, pivot, size.x, size.y, color);
 	DrawMeshImmediate(&quad);
+}
+
+void ImmediateRenderer::DrawQuad2D(const Vector2& position, const Vector2& pivot, const Vector2& size, const AABB2& uv, const Rgba& color /*= Rgba::WHITE*/) {
+	Mesh quad(PRIMITIVE_TYPE_TRIANGLELIST, true);
+	quad.AddQuad(position, pivot, size.x, size.y, uv, color);
+	DrawMeshImmediate(&quad);
+}
+
+void ImmediateRenderer::DrawPoint3D(const Vector3& center, const Rgba& color /*= Rgba::WHITE*/) {
+	Mesh point(PRIMITIVE_TYPE_POINTLIST, false);
+	point.AddPoint3D(center, color);
+	DrawMeshImmediate(&point);
 }
 
 void ImmediateRenderer::DrawLine3D(const Vector3& startPos, const Vector3& endPos, const Rgba& color /*= Rgba::WHITE*/) {
@@ -67,12 +94,13 @@ void ImmediateRenderer::BindMaterial(Material* mat /*= nullptr*/) {
 	m_device->UpdateBuffer(m_material_cBuffer.get(), &m_material->m_data);
 
 	// Set Vertex Shader
-	u32 numCBuffers = 4U;
+	u32 numCBuffers = 5U;
 	ID3D11Buffer* cBuffers[CONSTANT_BUFFER_SLOT_COUNT] = { nullptr };
 	cBuffers[CAMERA_BUFFER_SLOT] = m_camera_cBuffer->m_d3d11Buffer.Get();
 	cBuffers[OBJECT_BUFFER_SLOT] = m_obj_cBuffer->m_d3d11Buffer.Get();
 	cBuffers[LIGHT_BUFFER_SLOT] = m_light_cBuffer->m_d3d11Buffer.Get();
 	cBuffers[MATERIAL_BUFFER_SLOT] = m_material_cBuffer->m_d3d11Buffer.Get();
+	cBuffers[GLOBAL_BUFFER_SLOT] = m_global_cBuffer->m_d3d11Buffer.Get();
 
 	m_device->m_d3d11Context->VSSetShader(m_material->m_vs->m_d3d11VertexShader.Get(), nullptr, 0);
 	m_device->m_d3d11Context->VSSetConstantBuffers(0U, numCBuffers, cBuffers);
@@ -133,8 +161,10 @@ void ImmediateRenderer::DrawMeshImmediate(Mesh* mesh) {
 	// Input Assembler
 	if (mesh->m_isFinalized == false) {
 		mesh->m_isFinalized = true;
-		mesh->m_vertexBuffer = m_device->CreateVertexBuffer(mesh->m_vertices.size() * sizeof(VertexMaster), false, false, mesh->m_vertices.data());
+		mesh->m_vertexBuffer.reset();
+		mesh->m_vertexBuffer = m_device->CreateVertexBuffer(mesh->m_vertices.size() * sizeof(VertexMaster), true, false, mesh->m_vertices.data());
 		if(mesh->m_useIndices){
+			mesh->m_indexBuffer.reset();
 			mesh->m_indexBuffer = m_device->CreateIndexBuffer(mesh->m_triangles.size() * 3 * sizeof(u32), false, mesh->m_triangles.data());
 		}
 		else{
@@ -142,7 +172,8 @@ void ImmediateRenderer::DrawMeshImmediate(Mesh* mesh) {
 		}
 
 		GUARANTEE_OR_DIE(m_material != nullptr, "Failed to bind material for immediate renderer");
-		mesh->m_inputLayout = m_device->CreateInputLayout(VertexMaster::s_layoutDescs, m_material->m_vs);
+		mesh->m_inputLayout.reset();
+		mesh->m_inputLayout = m_device->CreateInputLayout(VertexMaster::s_layout_PCU, m_material->m_vs);
 	}
 
 	u32 strides = sizeof(VertexMaster);
@@ -160,4 +191,32 @@ void ImmediateRenderer::DrawMeshImmediate(Mesh* mesh) {
 	else {
 		m_device->Draw(mesh->m_vertices.size());
 	}
+}
+
+void ImmediateRenderer::SetSkyColor(const Rgba& color) {
+	Vector4 c = color.GetAsFloats();
+	m_globals.skyColor = c.xyz();
+	m_device->UpdateBuffer(m_global_cBuffer.get(), &m_globals);
+}
+
+void ImmediateRenderer::SetIndoorColor(const Rgba& color) {
+	Vector4 c = color.GetAsFloats();
+	m_globals.indoorLightColor = c.xyz();
+	m_device->UpdateBuffer(m_global_cBuffer.get(), &m_globals);
+}
+
+void ImmediateRenderer::SetOutdoorColor(const Rgba& color) {
+	Vector4 c = color.GetAsFloats();
+	m_globals.outdoorLightColor = c.xyz();
+	m_device->UpdateBuffer(m_global_cBuffer.get(), &m_globals);
+}
+
+void ImmediateRenderer::SetFogStart(float value) {
+	m_globals.fogStart = value;
+	m_device->UpdateBuffer(m_global_cBuffer.get(), &m_globals);
+}
+
+void ImmediateRenderer::SetFogEnd(float value) {
+	m_globals.fogEnd = value;
+	m_device->UpdateBuffer(m_global_cBuffer.get(), &m_globals);
 }

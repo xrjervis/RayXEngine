@@ -42,3 +42,23 @@ private:
 	std::unordered_map<std::string, Uptr<SpriteSheet>>			m_spriteSheets;
 // 	std::unordered_map<std::string, std::unique_ptr<SpriteAnimation>>	m_spriteAnims;
 };
+
+inline Texture2D* ResourceManager::GetTexture2D(const std::string& name) {
+	return m_texture2Ds.at(name).get();
+}
+
+inline ShaderProgram* ResourceManager::GetShaderProgram(const std::string& name) {
+	return m_shaderPrograms.at(name).get();
+}
+
+inline Material* ResourceManager::GetMaterial(const std::string& name) {
+	return m_materials.at(name).get();
+}
+
+inline Sampler* ResourceManager::GetSampler(const std::string& name) {
+	return m_samplers.at(name).get();
+}
+
+inline SpriteSheet* ResourceManager::GetSpriteSheet(const std::string& name) {
+	return m_spriteSheets.at(name).get();
+}

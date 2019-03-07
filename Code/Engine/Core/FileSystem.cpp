@@ -29,6 +29,23 @@ char* FileSystem::FileReadToBuffer(const char* filename) {
 	}
 }
 
+void FileSystem::BufferWriteToFile(const char* filename, char* buffer, size_t bufferSize, bool truncate, bool startAtEnd, bool binary) {
+	std::fstream fs;
+
+	if (truncate && binary) {
+		fs.open(filename, std::ios::out | std::ios::trunc | std::ios::binary);
+	}
+	else if (startAtEnd && binary) {
+		fs.open(filename, std::ios::out | std::ios::app | std::ios::binary);
+	}
+	else {
+		fs.open(filename, std::ios::out);
+	}
+
+	fs.write(buffer, bufferSize);
+	fs.close();
+}
+
 void FileSystem::WriteToFile(std::ofstream& fout, const std::string& data) {
 	if (!fout.is_open()) {
 		ERROR_AND_DIE("file is not open!");
@@ -39,6 +56,11 @@ void FileSystem::WriteToFile(std::ofstream& fout, const std::string& data) {
 }
 
 bool FileSystem::Exists(const std::wstring& filePath) {
+	std::experimental::filesystem::path path = filePath;
+	return std::experimental::filesystem::exists(path);
+}
+
+bool FileSystem::Exists(const std::string& filePath) {
 	std::experimental::filesystem::path path = filePath;
 	return std::experimental::filesystem::exists(path);
 }

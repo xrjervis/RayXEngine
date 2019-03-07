@@ -24,7 +24,7 @@ public:
 	RHIDevice(RHIInstance* rhi, const HardwareDeviceInfo_t& hardwareInfo);
 	~RHIDevice();
 
-	std::unique_ptr<RHIOutput>		CreateOutput(const std::wstring& windowTitle, float height, float aspect);
+	std::unique_ptr<RHIOutput>		CreateOutput(const std::wstring& windowTitle, eWindowMode mode, float aspect);
 
 	std::unique_ptr<Texture2D>		CreateTexture2D(const TextureDefinition_t& info);
 	std::unique_ptr<Texture2D>		CreateTexture2DFromSwapChain(RHIOutput* output);
