@@ -1,0 +1,7 @@
+<SpriteAnimation 
+    name="bat_idle"
+    spriteSheet="bat"
+    duration="2.0"
+    mode="loop"
+    startIndex="32"
+    endIndex="39" />

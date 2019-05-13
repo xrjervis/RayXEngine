@@ -1,0 +1,40 @@
+<GameConfig
+	ThiefMaxMoveDistance = "4"
+	GuardFlashlightFullBattery = "10"
+	GuardMoveDistanceRange = "3~6"
+	TotalMonitors = "6"
+	TotalTreasures = "9"
+	LeastTreasuresStolenToWin = "3"
+	EndTurnButtonHoldSeconds = "3.0"
+	GuardAlertDistanceDefault = "2.0"
+	GuardAlertDistanceWithFlashlight = "4.0"
+	MonitorAlertDistanceDefault = "2.0 "
+	PossibilityToDrawSingleMonitorAction = "1.0"
+	PossibilityToDrawScanAllMonitorsAction = "0.3"
+	PossibilityToDrawMotionDetectorAction = "0.05"
+/>
+
+<Rooms>
+	<Box mins="5,2" maxs="14,6" />
+	<Box mins="5,7" maxs="9,11" />
+	<Box mins="5,12" maxs="10,18" />
+	<Box mins="15,2" maxs="17,5" />
+	<Box mins="20,8" maxs="24,12" />
+	<Box mins="28,2" maxs="30,5" />
+	<Box mins="28,8" maxs="31,13" />
+	<Grids>
+		<Grid value="34,4" />
+		<Grid value="35,4" />
+		<Grid value="35,5" />
+		<Grid value="36,5" />
+		<Grid value="36,6" />
+		<Grid value="37,6" />
+		<Grid value="37,7" />
+		<Grid value="38,7" />
+		<Grid value="38,8" />
+		<Grid value="39,8" />
+		<Grid value="39,9" />
+		<Grid value="39,10" />
+		<Grid value="39,11" />
+	<Grids/>
+<Rooms/>

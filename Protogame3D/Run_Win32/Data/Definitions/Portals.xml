@@ -1,0 +1,44 @@
+<PortalDefinitions>
+  <PortalDefinition name="TeleportVortex">
+    <Size physicsRadius="0.5" triggerRadius="0.5" localDrawBounds="-0.5,-0.5,0.5,0.5"/>
+    <SpriteAnimSet spriteSheet="portal.png" spriteLayout="4,5" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="0~16"/>
+    </SpriteAnimSet>
+  </PortalDefinition>
+
+  <PortalDefinition name="InsidePortal">
+    <Size physicsRadius="0.5" triggerRadius="0.6" localDrawBounds="-0.5,-0.5,0.5,0.5"/>
+    <SpriteAnimSet spriteSheet="Terrain_32x32.png" spriteLayout="32,32" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="0"/>
+    </SpriteAnimSet>
+  </PortalDefinition>
+  
+  <PortalDefinition name="HouseDoor">
+    <Size physicsRadius="0.5" triggerRadius="0.6" localDrawBounds="-0.5,-0.5,0.5,0.5"/>
+    <SpriteAnimSet spriteSheet="Terrain_32x32.png" spriteLayout="32,32" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="444"/>
+    </SpriteAnimSet>
+  </PortalDefinition>
+
+  <PortalDefinition name="DownStair">
+    <Size physicsRadius="0.4" triggerRadius="0.6" localDrawBounds="-0.5,-0.5,0.5,0.5"/>
+    <SpriteAnimSet spriteSheet="Terrain_32x32.png" spriteLayout="32,32" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="446"/>
+    </SpriteAnimSet>
+  </PortalDefinition>
+
+  <PortalDefinition name="UpStair">
+    <Size physicsRadius="0.4" triggerRadius="0.6" localDrawBounds="-0.5,-0.5,0.5,0.5"/>
+    <SpriteAnimSet spriteSheet="Terrain_32x32.png" spriteLayout="32,32" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="478"/>
+    </SpriteAnimSet>
+  </PortalDefinition>
+
+  <PortalDefinition name="CaveEntry">
+    <Size physicsRadius="0.4" triggerRadius="0.6" localDrawBounds="-0.5,-0.5,0.5,0.5"/>
+    <SpriteAnimSet spriteSheet="Terrain_32x32.png" spriteLayout="32,32" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="193"/>
+    </SpriteAnimSet>
+  </PortalDefinition>
+  
+</PortalDefinitions>

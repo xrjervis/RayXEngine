@@ -1,0 +1,12 @@
+<Material name="terrain">
+    <int name="useDiffuse" value="1"/>
+    <int name="useNormal" value="0"/>
+    <int name="useSpecular" value="0"/>
+    <int name="useLighting" value="0"/>
+    <Texture name="diffuse" value="terrain_32x32" sampler="nearest"/>
+    <ShaderProgram name="vertexShader" value="default_vs"/>
+    <ShaderProgram name="pixelShader" value="default_ps"/>
+    <RasterizerState fill="solid" cull="back" frontCounterClockwise="true"/>
+    <BlendState blendSrc="src_alpha" blendDst="inv_src_alpha" blendOp="add"/>
+    <DepthStencilState depthTestEnable="true" depthTestComapre="less"/>
+</Material>

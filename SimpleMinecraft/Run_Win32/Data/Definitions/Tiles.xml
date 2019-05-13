@@ -1,0 +1,157 @@
+<TileDefinitions>
+  <TileDefinition
+	  name="Grass"
+	  baseSpriteCoords="2,0"
+	  baseSpriteTint="255,255,255"
+	  mapImageColor="0,255,0,255"
+	  allowsSight="true"
+	  allowsWalking="true"
+	  allowsFlying="true"
+	  allowsSwimming="false"
+    />
+
+  <TileDefinition
+    name="Tree"
+    baseSpriteCoords="2,0"
+	  baseSpriteTint="255,255,255"
+    overlaySpriteCoords="8,16"
+    overlaySpriteTint="255,255,255"
+    mapImageColor="0,255,255,255"
+    allowsSight="false"
+    allowsWalking="false"
+    allowsFlying="true"
+    allowsSwimming="false"
+   />
+
+  <TileDefinition
+    name="Lava"
+    baseSpriteCoords="19,3"
+    baseSpriteTint="255,255,255"
+	  mapImageColor="255,0,0,255"
+    allowsSight="true"
+    allowsWalking="false"
+    allowsFlying="true"
+    allowsSwimming="false"
+   />
+
+  <TileDefinition
+    name="Water"
+    baseSpriteCoords="25,31"
+    baseSpriteTint="255,255,255"
+	  mapImageColor="0,0,255,255"
+    allowsSight="true"
+    allowsWalking="false"
+    allowsFlying="true"
+    allowsSwimming="true"
+   />
+
+  <TileDefinition
+    name="StoneWall"
+    baseSpriteCoords="0,5"
+    baseSpriteTint="255,255,255"
+	  mapImageColor="0,0,0,255"
+    allowsSight="false"
+    allowsWalking="false"
+    allowsFlying="false"
+    allowsSwimming="false"
+   />
+
+  <TileDefinition
+    name="StoneFloor"
+    baseSpriteCoords="0,4"
+    baseSpriteTint="255,255,255"
+	  mapImageColor="195,195,195,255"
+    allowsSight="true"
+    allowsWalking="true"
+    allowsFlying="true"
+    allowsSwimming="false"
+   />
+
+  <TileDefinition
+    name="CaveWall"
+    baseSpriteCoords="1,5"
+    baseSpriteTint="255,255,255"
+	  mapImageColor="195,195,195,255"
+    allowsSight="false"
+    allowsWalking="false"
+    allowsFlying="false"
+    allowsSwimming="false"
+   />
+
+  <TileDefinition
+    name="CaveFloor"
+    baseSpriteCoords="9,5"
+    baseSpriteTint="255,255,255"
+	  mapImageColor="195,195,195,255"
+    allowsSight="true"
+    allowsWalking="true"
+    allowsFlying="true"
+    allowsSwimming="false"
+   />
+
+  <TileDefinition
+    name="WoodenFloor"
+    baseSpriteCoords="30,0"
+    baseSpriteTint="255,255,255"
+	  mapImageColor="185,122,86,255"
+    allowsSight="true"
+    allowsWalking="true"
+    allowsFlying="true"
+    allowsSwimming="false"
+   />
+
+  <TileDefinition
+    name="WoodenWall"
+    baseSpriteCoords="29,1"
+    baseSpriteTint="255,255,255"
+    mapImageColor="185,100,80,255"
+    allowsSight="false"
+    allowsWalking="false"
+    allowsFlying="false"
+    allowsSwimming="false"
+   />
+  
+
+  <TileDefinition
+    name="RuneWall"
+    baseSpriteCoords="0,5"
+    baseSpriteTint="255,255,255"
+    overlaySpriteCoords="0,15"
+    overlaySpriteTint="255,80,80"
+	  mapImageColor="255,80,80,255"
+    allowsSight="false"
+    allowsWalking="false"
+    allowsFlying="false"
+    allowsSwimming="false"
+    />
+
+
+  <TileDefinition
+    name ="House_0" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="17,23" mapImageColor="0,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+  <TileDefinition
+    name ="House_1" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="18,23" mapImageColor="1,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+  <TileDefinition
+    name ="House_2" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="19,23" mapImageColor="2,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+  <TileDefinition
+    name ="House_3" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="17,22" mapImageColor="3,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+  <TileDefinition
+    name ="House_4" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="18,22" mapImageColor="4,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+  <TileDefinition
+    name ="House_5" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="19,22" mapImageColor="5,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+  <TileDefinition
+    name ="House_6" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="17,21" mapImageColor="6,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+  <TileDefinition
+    name ="House_7" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="18,21" mapImageColor="7,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+  <TileDefinition
+    name ="House_8" baseSpriteCoords="2,0" baseSpriteTint="255,255,255" overlaySpriteCoords="19,21" mapImageColor="8,0,0,255"
+    allowsSight="false" allowsWalking="false" allowsFlying="true" allowsSwimming="false"/>
+
+</TileDefinitions>

@@ -1,0 +1,55 @@
+<MapDefinitions>
+  <MapDefinition name="Village" defaultTile="Water" width="18" height="9" >
+    <GenerationSteps iterations="1" chanceToRun="1">
+      <FillAndEdge fillTile="Grass" edgeTile="Water" />
+      <Range setTile="Tree" minCoords="4,4" maxCoords="8,7"/>
+      <Range setTile="StoneFloor" minCoords="6,4" maxCoords="6,4"/>
+      <Range setTile="StoneFloor" minCoords="1,1" maxCoords="1,1"/>
+      <Range setTile="RuneWall" minCoords="3,3" maxCoords="3,3"/>
+      <Range setTile="CaveWall" minCoords="10,5" maxCoords="16,7"/>
+      <Range setTags="house" minCoords="5,5" maxCoords="7,7"/>
+      <FromFile ifTags="house" fileName="house.png"/>
+      <SpawnEntity entityName="HouseDoor" onTileCoords="6,5" toMap="Prof's House" toCoords="6,1"/>
+      <SpawnEntity entityName="CaveEntry" onTileCoords="13,5" toMap="Dark Cave" toCoords="10,1"/>
+    </GenerationSteps>
+  </MapDefinition>
+
+  
+  <MapDefinition name="WoodenHouse"  width="13" height="13">
+    <GenerationSteps iterations="1" chanceToRun="1">
+      <Range setTile="WoodenWall" minCoords="1,1" maxCoords="11,11"/>
+      <Range setTile="WoodenFloor" minCoords="2,2" maxCoords="10,10"/>
+      <Range setTile="WoodenFloor" minCoords="6,1" maxCoords="6,1"/>
+      <SpawnEntity entityName="InsidePortal" onTileCoords="6,0" toMap="The Village" toCoords="6,4"/>
+      <SpawnEntity entityName="DownStair" onTileCoords="8,9" toMap="Prof's Cellar" toCoords="10,9"/>
+      <SpawnEntity entityName="NPC" onTileCoords="6,6"/>
+    </GenerationSteps>
+  </MapDefinition>
+  
+  
+  <MapDefinition name="Cellar" width="13" height="13">
+    <GenerationSteps iterations="1" chanceToRun="1">
+      <Range setTile="StoneWall" minCoords="1,1" maxCoords="11,11"/>
+      <Range setTile="StoneFloor" minCoords="2,2" maxCoords="10,10"/>
+      <SpawnEntity entityName="UpStair" onTileCoords="8,9" toMap="Prof's House" toCoords="7,9"/>
+      <SpawnEntity entityName="Bow" onTileCoords="2,2"/>
+      <SpawnEntity entityName="Spear" onTileCoords="2,3"/>
+      <SpawnEntity entityName="Hat" onTileCoords="2,4"/>
+      <SpawnEntity entityName="Armor" onTileCoords="2,5"/>
+      <SpawnEntity entityName="Legguard" onTileCoords="2,6"/>
+      <SpawnEntity entityName="Shoes" onTileCoords="2,7"/>
+      <SpawnEntity entityName="HealthDrop" onTileCoords="10,2"/>
+    </GenerationSteps>
+  </MapDefinition>
+
+
+  <MapDefinition name="Cave" defaultTile="Lava" width="20" height="20">
+    <GenerationSteps iterations="1" chanceToRun="1">
+      <Range setTile="CaveWall" minCoords="5,0" maxCoords="15,11"/>
+      <Range setTile="CaveFloor" minCoords="6,1" maxCoords="14,10"/>
+      <Range setTile="CaveFloor" minCoords="10,0" maxCoords="10,0"/>
+      <SpawnEntity iterations="10" entityName="Bat" onTile="CaveFloor"/>
+      <SpawnEntity entityName="InsidePortal" onTileCoords="10,0" toMap="The Village" toCoords="13,4"/>
+    </GenerationSteps>
+  </MapDefinition>
+</MapDefinitions>

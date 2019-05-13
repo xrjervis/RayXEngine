@@ -1,0 +1,182 @@
+<ItemDefinitions>
+  <ItemDefinition name="HealthDrop" equipSlot="None">
+    <Tags commaSeparatedTagNames="!Poisoned,!Bloody"/>
+    <Effects>
+      <Attribute name="Health" value="50"/>
+    </Effects>
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.5,0.5,0.5"/>
+    <Physics canPush="false" skipPush="false"/>
+    <SpriteAnimSet spriteSheet="Extras_4x4.png" spriteLayout="4,4" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="11"   priority="0"/>
+    </SpriteAnimSet>
+  </ItemDefinition>
+
+  
+  <ItemDefinition name="Bow" equipSlot="Hands">
+    <Tags commaSeparatedTagNames=""/>
+    <Effects>
+      <Stat name="Strength" value="10"/>
+    </Effects>
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.3,0.5,0.7"/>
+    <Physics canPush="false" skipPush="false"/>
+    <SpriteAnimSet spriteSheet="Item_bow.png" spriteLayout="13,4" startAnim="Static" fps="15" isLooping="true">
+      <SpriteAnim name="Static"               spriteIndexes="42"      priority="0"/>
+      <SpriteAnim name="Idle_Up"              spriteIndexes="0"       priority="0"/>
+      <SpriteAnim name="Idle_Right"           spriteIndexes="39"      priority="0"/>
+      <SpriteAnim name="Idle_Down"            spriteIndexes="26"      priority="0"/>
+      <SpriteAnim name="Idle_Left"            spriteIndexes="13"      priority="0"/>
+      <SpriteAnim name="Move_Up"              spriteIndexes="0"       priority="0"/>
+      <SpriteAnim name="Move_Right"           spriteIndexes="39"      priority="0"/>
+      <SpriteAnim name="Move_Down"            spriteIndexes="26"      priority="0"/>
+      <SpriteAnim name="Move_Left"            spriteIndexes="13"      priority="0"/>
+      <SpriteAnim name="Attack_Up_Bow"        spriteIndexes="0~8"     isLooping="false"   priority="1"/>
+      <SpriteAnim name="Attack_Right_Bow"     spriteIndexes="39~47"   isLooping="false"   priority="1"/>
+      <SpriteAnim name="Attack_Down_Bow"      spriteIndexes="26~34"   isLooping="false"   priority="1"/>
+      <SpriteAnim name="Attack_Left_Bow"      spriteIndexes="13~21"   isLooping="false"   priority="1"/>
+    </SpriteAnimSet>
+  </ItemDefinition>
+
+  <ItemDefinition name="Spear" equipSlot="Hands">
+    <Tags commaSeparatedTagNames=""/>
+    <Effects>
+      <Stat name="Strength" value="14"/>
+    </Effects>
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.3,0.5,0.7"/>
+    <Physics canPush="false" skipPush="false"/>
+    <SpriteAnimSet spriteSheet="Item_spear.png" spriteLayout="8,4" startAnim="Static" fps="15" isLooping="true">
+      <SpriteAnim name="Static"               spriteIndexes="8"       priority="0"/>
+      <SpriteAnim name="Idle_Up"              spriteIndexes="0"       priority="0"/>
+      <SpriteAnim name="Idle_Right"           spriteIndexes="24"      priority="0"/>
+      <SpriteAnim name="Idle_Down"            spriteIndexes="16"      priority="0"/>
+      <SpriteAnim name="Idle_Left"            spriteIndexes="8"       priority="0"/>
+      <SpriteAnim name="Move_Up"              spriteIndexes="0"       priority="0"/>
+      <SpriteAnim name="Move_Right"           spriteIndexes="24"      priority="0"/>
+      <SpriteAnim name="Move_Down"            spriteIndexes="16"      priority="0"/>
+      <SpriteAnim name="Move_Left"            spriteIndexes="8"       priority="0"/>
+      <SpriteAnim name="Attack_Up_Spear"      spriteIndexes="0~7"     isLooping="false"   priority="1"/>
+      <SpriteAnim name="Attack_Right_Spear"   spriteIndexes="24~31"   isLooping="false"   priority="1"/>
+      <SpriteAnim name="Attack_Down_Spear"    spriteIndexes="16~23"   isLooping="false"   priority="1"/>
+      <SpriteAnim name="Attack_Left_Spear"    spriteIndexes="8~15"    isLooping="false"   priority="1"/>
+    </SpriteAnimSet>
+  </ItemDefinition>
+
+  
+  <ItemDefinition name="Hat" equipSlot="Head">
+    <Tags commaSeparatedTagNames=""/>
+    <Effects>
+      <Stat name="Defense" value="2"/>
+      <Stat name="Agility"   value="5"/>
+    </Effects>
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.3,0.5,0.7"/>
+    <Physics canPush="false" skipPush="false"/>
+    <SpriteAnimSet spriteSheet="Item_hat.png" spriteLayout="13,12" startAnim="Static" fps="15" isLooping="true">
+      <SpriteAnim name="Static"               spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Up"              spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Right"           spriteIndexes="39"        priority="0"/>
+      <SpriteAnim name="Idle_Down"            spriteIndexes="26"        priority="0"/>
+      <SpriteAnim name="Idle_Left"            spriteIndexes="13"        priority="0"/>
+      <SpriteAnim name="Move_Up"              spriteIndexes="0~8"       priority="0"/>
+      <SpriteAnim name="Move_Right"           spriteIndexes="39~47"     priority="0"/>
+      <SpriteAnim name="Move_Down"            spriteIndexes="26~34"     priority="0"/>
+      <SpriteAnim name="Move_Left"            spriteIndexes="13~21"     priority="0"/>
+      <SpriteAnim name="Attack_Up_Spear"      spriteIndexes="52~59"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Right_Spear"   spriteIndexes="91~99"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Down_Spear"    spriteIndexes="78~85"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Left_Spear"    spriteIndexes="65~72"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Up_Bow"        spriteIndexes="104~116"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Right_Bow"     spriteIndexes="143~155"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Down_Bow"      spriteIndexes="130~142"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Left_Bow"      spriteIndexes="117~129"   isLooping="false"    priority="1"/>
+    </SpriteAnimSet>
+  </ItemDefinition>
+
+  
+  <ItemDefinition name="Armor" equipSlot="Body">
+    <Tags commaSeparatedTagNames=""/>
+    <Effects>
+      <Stat name="Defense" value="3"/>
+      <Stat name="Spirit"  value="10"/>
+    </Effects>
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.3,0.5,0.7"/>
+    <Physics canPush="false" skipPush="false"/>
+    <SpriteAnimSet spriteSheet="Item_armor.png" spriteLayout="13,12" startAnim="Static" fps="15" isLooping="true">
+      <SpriteAnim name="Static"               spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Up"              spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Right"           spriteIndexes="39"        priority="0"/>
+      <SpriteAnim name="Idle_Down"            spriteIndexes="26"        priority="0"/>
+      <SpriteAnim name="Idle_Left"            spriteIndexes="13"        priority="0"/>
+      <SpriteAnim name="Move_Up"              spriteIndexes="0~8"       priority="0"/>
+      <SpriteAnim name="Move_Right"           spriteIndexes="39~47"     priority="0"/>
+      <SpriteAnim name="Move_Down"            spriteIndexes="26~34"     priority="0"/>
+      <SpriteAnim name="Move_Left"            spriteIndexes="13~21"     priority="0"/>
+      <SpriteAnim name="Attack_Up_Spear"      spriteIndexes="52~59"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Right_Spear"   spriteIndexes="91~99"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Down_Spear"    spriteIndexes="78~85"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Left_Spear"    spriteIndexes="65~72"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Up_Bow"        spriteIndexes="104~116"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Right_Bow"     spriteIndexes="143~155"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Down_Bow"      spriteIndexes="130~142"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Left_Bow"      spriteIndexes="117~129"   isLooping="false"    priority="1"/>
+    </SpriteAnimSet>
+  </ItemDefinition>
+
+
+  <ItemDefinition name="Shoes" equipSlot="Feet">
+    <Tags commaSeparatedTagNames=""/>
+    <Effects>
+      <Stat name="Defense" value="1"/>
+      <Stat name="Agility"   value="5"/>
+    </Effects>
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.3,0.5,0.7"/>
+    <Physics canPush="false" skipPush="false"/>
+    <SpriteAnimSet spriteSheet="Item_shoes.png" spriteLayout="13,12" startAnim="Static" fps="15" isLooping="true">
+      <SpriteAnim name="Static"               spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Up"              spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Right"           spriteIndexes="39"        priority="0"/>
+      <SpriteAnim name="Idle_Down"            spriteIndexes="26"        priority="0"/>
+      <SpriteAnim name="Idle_Left"            spriteIndexes="13"        priority="0"/>
+      <SpriteAnim name="Move_Up"              spriteIndexes="0~8"       priority="0"/>
+      <SpriteAnim name="Move_Right"           spriteIndexes="39~47"     priority="0"/>
+      <SpriteAnim name="Move_Down"            spriteIndexes="26~34"     priority="0"/>
+      <SpriteAnim name="Move_Left"            spriteIndexes="13~21"     priority="0"/>
+      <SpriteAnim name="Attack_Up_Spear"      spriteIndexes="52~59"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Right_Spear"   spriteIndexes="91~99"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Down_Spear"    spriteIndexes="78~85"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Left_Spear"    spriteIndexes="65~72"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Up_Bow"        spriteIndexes="104~116"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Right_Bow"     spriteIndexes="143~155"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Down_Bow"      spriteIndexes="130~142"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Left_Bow"      spriteIndexes="117~129"   isLooping="false"    priority="1"/>
+    </SpriteAnimSet>
+  </ItemDefinition>
+
+
+  <ItemDefinition name="Legguard" equipSlot="Legs">
+    <Tags commaSeparatedTagNames=""/>
+    <Effects>
+      <Stat name="Defense" value="2"/>
+      <Stat name="Spirit"   value="10"/>
+    </Effects>
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.3,0.5,0.7"/>
+    <Physics canPush="false" skipPush="false"/>
+    <SpriteAnimSet spriteSheet="Item_legguard.png" spriteLayout="13,12" startAnim="Static" fps="15" isLooping="true">
+      <SpriteAnim name="Static"               spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Up"              spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Right"           spriteIndexes="39"        priority="0"/>
+      <SpriteAnim name="Idle_Down"            spriteIndexes="26"        priority="0"/>
+      <SpriteAnim name="Idle_Left"            spriteIndexes="13"        priority="0"/>
+      <SpriteAnim name="Move_Up"              spriteIndexes="0~8"       priority="0"/>
+      <SpriteAnim name="Move_Right"           spriteIndexes="39~47"     priority="0"/>
+      <SpriteAnim name="Move_Down"            spriteIndexes="26~34"     priority="0"/>
+      <SpriteAnim name="Move_Left"            spriteIndexes="13~21"     priority="0"/>
+      <SpriteAnim name="Attack_Up_Spear"      spriteIndexes="52~59"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Right_Spear"   spriteIndexes="91~99"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Down_Spear"    spriteIndexes="78~85"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Left_Spear"    spriteIndexes="65~72"     isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Up_Bow"        spriteIndexes="104~116"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Right_Bow"     spriteIndexes="143~155"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Down_Bow"      spriteIndexes="130~142"   isLooping="false"    priority="1"/>
+      <SpriteAnim name="Attack_Left_Bow"      spriteIndexes="117~129"   isLooping="false"    priority="1"/>
+    </SpriteAnimSet>
+  </ItemDefinition>
+</ItemDefinitions>

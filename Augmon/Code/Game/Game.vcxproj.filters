@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{e1f4e013-6ee6-4706-956f-6a95ffd56c62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="hlsl">
+      <UniqueIdentifier>{927b20ad-77ef-40fd-bb43-0582467fa168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EscapeGame">
+      <UniqueIdentifier>{c8fe1d41-3a5d-4293-ad07-dc134735858a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ComposerGame">
+      <UniqueIdentifier>{0b57b17e-a714-43dd-9c91-ff93e1a65b86}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main_Win32.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TheApp.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Board.cpp">
+      <Filter>EscapeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>EscapeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="SetupState.cpp">
+      <Filter>EscapeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="VictoryState.cpp">
+      <Filter>EscapeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="EscapeGame.cpp">
+      <Filter>EscapeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="EscapeWorld.cpp">
+      <Filter>EscapeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="EncounterState.cpp">
+      <Filter>EscapeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>EscapeGame</Filter>
+    </ClCompile>
+    <ClCompile Include="ComposerGame.cpp">
+      <Filter>ComposerGame</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineBuildPreferences.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TheApp.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Augmon.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Visibility2d.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Thief.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Guard.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCommon.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="SetupState.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="VictoryState.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="EscapeGame.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="EscapeWorld.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="EncounterState.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.hpp">
+      <Filter>EscapeGame</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Run_Win32\Data\Shaders\hlsl\common.hlsli">
+      <Filter>hlsl</Filter>
+    </None>
+    <None Include="ComposerGame.hpp">
+      <Filter>ComposerGame</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Run_Win32\Data\Shaders\hlsl\default_ps.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\Run_Win32\Data\Shaders\hlsl\default_vs.hlsl">
+      <Filter>hlsl</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

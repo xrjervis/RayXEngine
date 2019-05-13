@@ -1,0 +1,9 @@
+<Material name="default">
+    <int name="useDiffuse" value="1"/>
+    <Texture name="diffuse" value="default" sampler="nearest"/>
+    <ShaderProgram name="vertexShader" value="default_vs"/>
+    <ShaderProgram name="pixelShader" value="default_ps"/>
+    <RasterizerState fill="solid" cull="back" frontCounterClockwise="true"/>
+    <BlendState blendSrc="src_alpha" blendDst="inv_src_alpha" blendOp="add"/>
+    <DepthStencilState depthTestEnable="true" depthTestComapre="always"/>
+</Material>

@@ -1,0 +1,105 @@
+<ActorDefinitions>
+  <ActorDefinition name="Player" faction="good">
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.3,0.5,0.7"/>
+    <Tags commaSeparatedTagNames="poisoned"/>
+    <Physics canPush="true" skipPush="false"/>
+    <Attributes>
+      <Attribute name="Health"    value="50"/>
+      <Attribute name="MaxHealth" value="100"/>
+      <Attribute name="Mana"      value="100"/>
+      <Attribute name="MaxMana"   value="100"/>
+      <Movement>
+        <Walk MaxSpeed="3"/>
+        <Swim MaxSpeed="1"/>
+      </Movement>
+      <Attribute name="Perception"  value="1"/>
+      <Attribute name="Critical"  value="1"/>
+    </Attributes>
+    <Stats>
+      <Stat name="Strength"       value="1"/>
+      <Stat name="Defense"        value="1"/>
+      <Stat name="Agility"        value="1" />
+      <Stat name="Intelligence"   value="1"/>
+      <Stat name="Spirit"         value="1" />
+    </Stats>
+    <SpriteAnimSet spriteSheet="Player.png" spriteLayout="13,12" startAnim="Idle_Right" fps="15" isLooping="true">
+      <SpriteAnim name="Idle_Up"              spriteIndexes="0"         priority="0"/>
+      <SpriteAnim name="Idle_Right"           spriteIndexes="39"        priority="0"/>
+      <SpriteAnim name="Idle_Down"            spriteIndexes="26"        priority="0"/>
+      <SpriteAnim name="Idle_Left"            spriteIndexes="13"        priority="0"/>
+      <SpriteAnim name="Move_Up"              spriteIndexes="0~8"       priority="0"/>
+      <SpriteAnim name="Move_Right"           spriteIndexes="39~47"     priority="0"/>
+      <SpriteAnim name="Move_Down"            spriteIndexes="26~34"     priority="0"/>
+      <SpriteAnim name="Move_Left"            spriteIndexes="13~21"     priority="0"/>
+      <SpriteAnim name="Attack_Up_Spear"      spriteIndexes="52~59"     priority="1"    isLooping="false"/>
+      <SpriteAnim name="Attack_Right_Spear"   spriteIndexes="91~99"     priority="1"    isLooping="false"/>
+      <SpriteAnim name="Attack_Down_Spear"    spriteIndexes="78~85"     priority="1"    isLooping="false"/>
+      <SpriteAnim name="Attack_Left_Spear"    spriteIndexes="65~72"     priority="1"    isLooping="false"/>
+      <SpriteAnim name="Attack_Up_Bow"        spriteIndexes="104~116"   priority="1"    isLooping="false"/>
+      <SpriteAnim name="Attack_Right_Bow"     spriteIndexes="143~155"   priority="1"    isLooping="false"/>
+      <SpriteAnim name="Attack_Down_Bow"      spriteIndexes="130~142"   priority="1"    isLooping="false"/>
+      <SpriteAnim name="Attack_Left_Bow"      spriteIndexes="117~129"   priority="1"    isLooping="false"/>
+    </SpriteAnimSet>
+  </ActorDefinition>
+
+
+  <ActorDefinition name="Bat" faction="evil">
+    <Size physicsRadius="0.25" triggerRadius="0.5" localDrawBounds="-0.64,-0.5,0.64,0.5"/>
+    <Tags commaSeparatedTagNames="bloody"/>
+    <Physics canPush="true" skipPush="false"/>
+    <Attributes>
+      <Attribute name="Health"    value="100"/>
+      <Attribute name="MaxHealth" value="100"/>
+      <Attribute name="Mana"      value="100"/>
+      <Attribute name="MaxMana"   value="100"/>
+      <Movement>
+        <Fly MaxSpeed="3"/>
+      </Movement>
+      <Attribute name="Perception"  value="0.1"/>
+      <Attribute name="Critical"    value="0.1"/>
+    </Attributes>
+
+    <Stats>
+      <Stat name="Strength"       value="1~5"/>
+      <Stat name="Defense"        value="1~5"/>
+      <Stat name="Agility"        value="1~5" />
+      <Stat name="Intelligence"   value="1~5"/>
+      <Stat name="Spirit"         value="1~5" />
+    </Stats>
+
+    <SpriteAnimSet spriteSheet="Bat.png" spriteLayout="8,6" startAnim="Idle" fps="20  " isLooping="true">
+      <SpriteAnim name="Attack" spriteIndexes="0~7"     priority="1"    isLooping="false"/>
+      <SpriteAnim name="Die"    spriteIndexes="6~15"    priority="3"    isLooping="false"/>
+      <SpriteAnim name="Fly"    spriteIndexes="16~23"   priority="0"/>
+      <SpriteAnim name="Hurt"   spriteIndexes="24~31"   priority="2"    isLooping="false"/>
+      <SpriteAnim name="Idle"   spriteIndexes="32~43"   priority="0"/>
+    </SpriteAnimSet>
+  </ActorDefinition>
+
+
+  <ActorDefinition name="NPC" faction="good">
+    <Size physicsRadius="0.3" triggerRadius="0.5" localDrawBounds="-0.5,-0.3,0.5,0.7"/>
+    <Physics canPush="false" skipPush="false"/>
+    <Attributes>
+      <Attribute name="Health"    value="100"/>
+      <Attribute name="MaxHealth" value="100"/>
+      <Attribute name="Mana"      value="100"/>
+      <Attribute name="MaxMana"   value="100"/>
+      <Movement>
+        <Walk MaxSpeed="0"/>
+      </Movement>
+      <Attribute name="Perception"  value="0.1"/>
+      <Attribute name="Critical"  value="0.1"/>
+    </Attributes>
+
+    <SpriteAnimSet spriteSheet="KushnariovaCharacters_12x53.png" spriteLayout="12,53" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="595"       priority="0"/>
+    </SpriteAnimSet>
+
+    <Dialogues>
+      <Text text="Hey, young man, nice to see you here..."/>
+      <Text text="I'm old now. Could you please kill those EVIL BATS in the Dark Cave for me?"/>
+      <Text text="By the way, those equipment in the Cellar may be useful for you."/>
+    </Dialogues>
+  </ActorDefinition>
+</ActorDefinitions>

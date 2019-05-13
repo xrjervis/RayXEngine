@@ -1,0 +1,7 @@
+#pragma once
+
+enum eColliderType {
+	COLLIDER_TYPE_UNIBALL,
+	COLLIDER_TYPE_AABB3,
+	NUM_COLLIDERS_TPYES
+};

@@ -1,0 +1,4 @@
+<GameConfig
+	ChunkActivationRange="200"
+	StepsPerMeter="100"
+/>

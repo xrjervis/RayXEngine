@@ -1,0 +1,17 @@
+<AdventureDefinitions>
+  <AdventureDefinition name="Barlog" title="Kill All Bats!">
+    <StartConditions>
+      <StartMap name="The Village"/>
+      <Player name="Player" onTileCoords="1,1"/>
+    </StartConditions>
+    <VictoryConditions>
+      <MissionComplete name="Kill All Bats"/>
+    </VictoryConditions>
+    <Maps>
+      <Map mapName="The Village"    mapTypeName="Village" soundName="003 [Music by Guido Arcella Diez].mp3"/>
+      <Map mapName="Prof's House"   mapTypeName="WoodenHouse" soundName="02_Tavern [Music by Guido Arcella Diez].wav"/>
+      <Map mapName="Prof's Cellar"  mapTypeName="Cellar"/>
+      <Map mapName="Dark Cave"      mapTypeName="Cave"  soundName="01 Track 1.wav"/>
+    </Maps>
+  </AdventureDefinition>
+</AdventureDefinitions>

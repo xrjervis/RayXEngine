@@ -1,0 +1,17 @@
+<GameConfig
+	hostAddress="10.8.140.44:10084"
+	startMap="The Village"
+	windowAspect="1.777"
+	numTilesInViewVertically="16"
+  isFullscreen="false"
+	ImagePath="Data/Images/"
+	AudioPath="Data/Audios/"
+	DefinitionPath="Data/Definitions/"
+	FontPath="Data/Fonts/"
+	TileImageName="Terrain_32x32.png"
+	TileImageLayout="32,32"
+	MapImagePath="Data/MapImages/"
+  InventoryUIName="UI_Inventory.png"
+  ButtonAImage="Button_A.png"
+
+/>
