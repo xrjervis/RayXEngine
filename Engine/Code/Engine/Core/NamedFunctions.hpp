@@ -18,7 +18,7 @@ template<typename R, typename... Args>
 class NamedFunction<R(Args...)> : public FunctionBase{
 public:
 	template<typename... Ts>
-	explicit NFunction(Ts&&... ts)
+	explicit NamedFunction(Ts&&... ts)
 		: m_func(std::forward<Ts>(ts)...) {}
 
 	R Invoke(Args&&... args) {
