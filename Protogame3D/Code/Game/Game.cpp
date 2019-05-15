@@ -77,8 +77,6 @@ void Game::Update() {
 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_R)) {
 		m_midiPlayer->SwitchInstrument(40);
 	}
-
-
 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_A)) {
 		m_midiPlayer->PlayNote(60);
 	}
