@@ -75,7 +75,7 @@ World::World() {
 	//--------------------------------------------------------------------
 	// Spawn player and camera
 	m_player = std::make_unique<Player>(this);
-	m_player->m_transform.SetWorldPosition(Vector3(-CHUNK_SIZE_X * 0.5f, 150.f, CHUNK_SIZE_Y * 0.5f));
+	m_player->m_transform.SetWorldPosition(Vector3(-CHUNK_SIZE_X * 0.5f, 153.f, CHUNK_SIZE_Y * 0.5f));
 	if (m_player->m_colliderType == COLLIDER_TYPE_UNIBALL) {
 		m_mainCamera3D->m_transform.LookAt(Vector3(0.f, 2.5f, -8.f), Vector3(0.f, 0.f, 0.f));
 	}

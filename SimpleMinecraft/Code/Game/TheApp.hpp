@@ -32,7 +32,7 @@ public:
 	void						Render() const;
 	void						OnQuit();
 	bool						IsQuitting() const;
-	bool						TestMemberMethod(const NamedProperties& args);
+	bool						TestMemberMethod();
 
 private:
 	void						PostStartUp();

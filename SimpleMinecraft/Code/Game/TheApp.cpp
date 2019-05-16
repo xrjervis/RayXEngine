@@ -140,7 +140,7 @@ bool WinMsgHandler(unsigned int msg, size_t wparam, size_t lparam) {
 };
 
 
-bool TestStandaloneFunction(const NamedProperties& np) {
+bool TestStandaloneFunction() {
 	DebugString(8.f, "Test standalone function called!", Rgba::RED, Rgba::GREEN);
 	return false;
 }
@@ -212,8 +212,8 @@ void TheApp::PostStartUp() {
 // 	g_theEventSystem->Subscribe("TestEvent", memberMethod);
 // 	g_theEventSystem->UnSubscribe("TestEvent", memberMethod);
 
-	g_theEventSystem->m_namedFunctions.Register("TestStandaloneFunction", new NamedFunction<bool(const NamedProperties&)>(TestStandaloneFunction));
-	g_theEventSystem->m_namedFunctions.Register("TestMemberMethod", new NamedFunction<bool(const NamedProperties&)>(std::bind(&TheApp::TestMemberMethod, this, std::placeholders::_1)));
+	g_theEventSystem->m_namedFunctions.Register("TestStandaloneFunction", new NamedFunction<bool()>(TestStandaloneFunction));
+	g_theEventSystem->m_namedFunctions.Register("TestMemberMethod", new NamedFunction<bool()>(std::bind(&TheApp::TestMemberMethod, this)));
 
 	g_theEventSystem->Subscribe("OnButtonHit", "TestStandaloneFunction");
 	g_theEventSystem->Subscribe("OnButtonHit", "TestMemberMethod");
@@ -351,7 +351,7 @@ bool TheApp::IsQuitting() const {
 	return m_isQuitting;
 }
 
-bool TheApp::TestMemberMethod(const NamedProperties & args) {
+bool TheApp::TestMemberMethod() {
 	DebugString(3.f, "Test member method called!", Rgba::BLUE, Rgba::GREEN);
 	return false;
 }
@@ -364,7 +364,7 @@ void TheApp::UpdateInput() {
 		g_theConsole->ToggleOpen();
 	}
 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_E)) {
-		g_theEventSystem->FireEvents("OnButtonHit");
+		g_theEventSystem->FireEvents("OnButtonHit", 4, 43.5f, Rgba::BLACK);
 	}
 }
 

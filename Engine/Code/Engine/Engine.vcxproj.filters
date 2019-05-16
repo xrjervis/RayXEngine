@@ -142,9 +142,6 @@
     <ClCompile Include="Math\RawNoise.cpp">
       <Filter>Math</Filter>
     </ClCompile>
-    <ClCompile Include="Math\MatrixStack.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="Math\AABB3.cpp">
       <Filter>Math</Filter>
     </ClCompile>
@@ -337,13 +334,7 @@
     <ClCompile Include="Core\Blob.cpp">
       <Filter>Core\Memory</Filter>
     </ClCompile>
-    <ClCompile Include="Core\List.cpp">
-      <Filter>Core\Memory</Filter>
-    </ClCompile>
     <ClCompile Include="Core\BytePacker.cpp">
-      <Filter>Core\Memory</Filter>
-    </ClCompile>
-    <ClCompile Include="Core\Allocator.cpp">
       <Filter>Core\Memory</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\d3d11\FontRenderer.cpp">
@@ -485,9 +476,6 @@
     </ClInclude>
     <ClInclude Include="Renderer\external\gl\wglext.h">
       <Filter>Renderer\external\gl</Filter>
-    </ClInclude>
-    <ClInclude Include="Math\MatrixStack.hpp">
-      <Filter>Math</Filter>
     </ClInclude>
     <ClInclude Include="Math\AABB3.hpp">
       <Filter>Math</Filter>
@@ -717,16 +705,10 @@
     <ClInclude Include="Core\Blob.hpp">
       <Filter>Core\Memory</Filter>
     </ClInclude>
-    <ClInclude Include="Core\List.hpp">
-      <Filter>Core\Memory</Filter>
-    </ClInclude>
     <ClInclude Include="Core\TripleBuffer.hpp">
       <Filter>Core\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Core\BytePacker.hpp">
-      <Filter>Core\Memory</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\Allocator.hpp">
       <Filter>Core\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\d3d11\InputLayout.hpp">
