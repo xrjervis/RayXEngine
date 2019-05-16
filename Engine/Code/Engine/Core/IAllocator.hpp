@@ -4,11 +4,16 @@
 class IAllocator {
 public:
 	IAllocator(size_t totalSize) : m_totalSize(totalSize) {}
-	virtual ~IAllocator() = 0;
+	virtual ~IAllocator() {}
 
 	virtual void* Alloc(size_t size, size_t alignment) = 0;
-	virtual void Free(void* ptr) = 0;
-	virtual void Clear() = 0;
+	
+	virtual void Free(void* ptr) {
+	}
+	
+	virtual void Clear() { 
+		m_totalSize = 0; 
+	}
 
 protected:
 	size_t m_totalSize = 0;

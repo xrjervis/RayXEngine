@@ -41,6 +41,9 @@ public:
 	float	GetLengthSquared() const;
 	Vector3	GetNormalized() const;
 
+	void	SetFromText(const char* text);
+
+
 public: // NOTE: this is one of the few cases where we break both the "m_" naming rule AND the avoid-public-members rule
 	float x = 0.f;
 	float y = 0.f;

@@ -14,22 +14,24 @@
 #include "Engine/Renderer/d3d11/RHIOutput.hpp"
 #include "Engine/Math/MathUtils.hpp"
 #include "Engine/Math/SmoothNoise.hpp"
+#include "Engine/Core/NamedFunctions.hpp"
+#include "Engine/Core/NamedProperties.hpp"
+#include "Engine/Core/StackAllocator.hpp"
 #include "Game/Game.hpp"
 #include "Game/TheApp.hpp"
+#include "Game/Entity.hpp"
 
 Game::Game() {
-//	//--------------------------------------------------------------------------
+//	---
 //	// Set game coords matrix
 // 	Matrix44::GameToEngine = Matrix44(Vector3(0.f, 0.f, 1.f), Vector3(-1.f, 0.f, 0.f), Vector3(0.f, 1.f, 0.f));
 // 	Matrix44::EngineToGame = Matrix44::GameToEngine;
 // 	Matrix44::EngineToGame.Inverse();
 
-	//--------------------------------------------------------------------------
 	// Create my game clock
 	m_gameClock = std::make_unique<Clock>(g_theMasterClock.get());
 	g_theMasterClock->AddChild(m_gameClock.get());
 
-	//--------------------------------------------------------------------------
 	// Create the main 2d camera
 	m_mainCamera2D = std::make_unique<Camera>();
 	m_mainCamera2D->SetViewport(0U, 0, 0, g_mainOutput->GetWidth(), g_mainOutput->GetHeight(), 0.f, 1.f);
@@ -38,7 +40,6 @@ Game::Game() {
 	m_mainCamera2D->SetRenderTarget(g_mainOutput->GetRTV());
 	m_mainCamera2D->SetDepthTarget(g_mainOutput->GetDSV());
 
-	//--------------------------------------------------------------------------
 	// Create the main 3d camera
 	m_mainCamera3D = std::make_unique<Camera>();
 	m_mainCamera3D->SetViewport(0U, 0, 0, g_mainOutput->GetWidth(), g_mainOutput->GetHeight(), 0.f, 1.f);
@@ -47,7 +48,6 @@ Game::Game() {
 	m_mainCamera3D->SetRenderTarget(g_mainOutput->GetRTV());
 	m_mainCamera3D->SetDepthTarget(g_mainOutput->GetDSV());
 
-	//--------------------------------------------------------------------------
 	// Setup debug draw system to use my 2d/3d cameras
 	g_theDebugDrawSystem->SetCamera2D(m_mainCamera2D.get());
 	g_theDebugDrawSystem->SetCamera3D(m_mainCamera3D.get());
@@ -55,151 +55,180 @@ Game::Game() {
 	DebugString(10.f, "World Begin!", Rgba::GREEN, Rgba::RED);
 
 
-	//--------------------------------------------------------------------
 	m_midiPlayer = std::make_unique<MIDIPlayer>();
+
+	PostStartup();
 }
 
 Game::~Game() {
 
 }
 
-void Game::Update() {
-	float dt = m_gameClock->GetDeltaSeconds();
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_Q)) {
-		m_midiPlayer->SwitchInstrument(0);
-	}
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_W)) {
-		m_midiPlayer->SwitchInstrument(8);
-	}
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_E)) {
-		m_midiPlayer->SwitchInstrument(24);
-	}
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_R)) {
-		m_midiPlayer->SwitchInstrument(40);
-	}
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_A)) {
-		m_midiPlayer->PlayNote(60);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_A)) {
-		m_midiPlayer->StopNote(60);
-	}
 
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_S)) {
-		m_midiPlayer->PlayNote(62);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_S)) {
-		m_midiPlayer->StopNote(62);
-	}
 
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_D)) {
-		m_midiPlayer->PlayNote(64);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_D)) {
-		m_midiPlayer->StopNote(64);
-	}
 
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_F)) {
-		m_midiPlayer->PlayNote(65);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_F)) {
-		m_midiPlayer->StopNote(65);
-	}
+StackAllocator* g_stackAllocator = nullptr;
 
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_G)) {
-		m_midiPlayer->PlayNote(67);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_G)) {
-		m_midiPlayer->StopNote(67);
-	}
+//--------------------------------------------------------------------
+void Game::PostStartup() {
+	g_stackAllocator = new StackAllocator(1024);
+	void* block1 = g_stackAllocator->Alloc(14);
+	void* block2 = g_stackAllocator->Alloc(2);
 
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_H)) {
-		m_midiPlayer->PlayNote(69);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_H)) {
-		m_midiPlayer->StopNote(69);
-	}
+	g_stackAllocator->FreeTop();
+	void* block3 = g_stackAllocator->Alloc(65);
 
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_J)) {
-		m_midiPlayer->PlayNote(71);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_J)) {
-		m_midiPlayer->StopNote(71);
-	}
 
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_K)) {
-		m_midiPlayer->PlayNote(72);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_K)) {
-		m_midiPlayer->StopNote(72);
-	}
-
-	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_L)) {
-		m_midiPlayer->PlayNote(74);
-	}
-	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_L)) {
-		m_midiPlayer->StopNote(74);
-	}
-// 	float cameraRotateSpeed;
-// 	float cameraSpeed;
-// 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_SHIFT)) {
-// 		cameraRotateSpeed = 0.5f;
-// 		cameraSpeed = 30.f;
-// 	}
-// 	else {
-// 		cameraRotateSpeed = 0.2f;
-// 		cameraSpeed = 5.f;
-// 	}
-// 
-// 	Vector3 forward = m_mainCamera3D->m_transform.GetForward();
-// 	forward.y = 0;
-// 	forward = forward.GetNormalized();
-// 	Vector3 right = m_mainCamera3D->m_transform.GetRight();
-// 	Vector3 up(0.f, 1.f, 0.f);
-// 
-// 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_W)) {
-// 		m_mainCamera3D->m_transform.Translate(forward * cameraSpeed * dt);
-// 	}
-// 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_S)) {
-// 		m_mainCamera3D->m_transform.Translate(-forward * cameraSpeed * dt);
-// 	}
-// 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_A)) {
-// 		m_mainCamera3D->m_transform.Translate(-right * cameraSpeed * dt);
-// 	}
-// 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_D)) {
-// 		m_mainCamera3D->m_transform.Translate(right * cameraSpeed * dt);
-// 	}
-// 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_Q)) {
-// 		m_mainCamera3D->m_transform.Translate(-up * cameraSpeed * dt);
-// 	}
-// 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_E)) {
-// 		m_mainCamera3D->m_transform.Translate(up * cameraSpeed * dt);
-// 	}
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_M)) {
-// 		if (g_theInput->GetMouseMode() == MOUSEMODE_FREE) {
-// 			g_theInput->SetMouseMode(MOUSEMODE_SNAP);
-// 		}
-// 		else {
-// 			g_theInput->SetMouseMode(MOUSEMODE_FREE);
-// 		}
-// 	}
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_SPACE)) {
-// 		m_mainCamera3D->m_transform.SetWorldMatrix(Matrix44());
-// 	}
-// 
-// 	Vector2 mouseDelta = g_theInput->GetMouseDelta();
-// 	if (mouseDelta.x != 0.f) {
-// 		m_mainCamera3D->m_transform.Rotate(Vector3(0.f, 1.f, 0.f) * mouseDelta.x * cameraRotateSpeed);
-// 	}
-// 	if (mouseDelta.y != 0.f) {
-// 		m_mainCamera3D->m_transform.Rotate(Vector3(1.f, 0.f, 0.f) * mouseDelta.y * cameraRotateSpeed);
-// 	}
-// 	//--------------------------------------------------------------------
-// 	// Print Camera Position
-// 	DebugString(0.f, Stringf("Camera Position: (%.2f, %.2f, %.2f)", m_mainCamera3D->m_transform.GetWorldPosition().z, -m_mainCamera3D->m_transform.GetWorldPosition().x, m_mainCamera3D->m_transform.GetWorldPosition().y), Rgba::WHITE, Rgba::WHITE);
+	delete g_stackAllocator;
+	g_stackAllocator = nullptr;
+	int x = 0;
+	return;
 }
 
+//--------------------------------------------------------------------
+void Game::Update() {
+	float ds = m_gameClock->GetDeltaSeconds();
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_Q)) {
+// 		m_midiPlayer->SwitchInstrument(0);
+// 	}
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_W)) {
+// 		m_midiPlayer->SwitchInstrument(8);
+// 	}
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_E)) {
+// 		m_midiPlayer->SwitchInstrument(24);
+// 	}
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_R)) {
+// 		m_midiPlayer->SwitchInstrument(40);
+// 	}
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_A)) {
+// 		m_midiPlayer->PlayNote(60);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_A)) {
+// 		m_midiPlayer->StopNote(60);
+// 	}
+// 
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_S)) {
+// 		m_midiPlayer->PlayNote(62);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_S)) {
+// 		m_midiPlayer->StopNote(62);
+// 	}
+// 
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_D)) {
+// 		m_midiPlayer->PlayNote(64);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_D)) {
+// 		m_midiPlayer->StopNote(64);
+// 	}
+// 
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_F)) {
+// 		m_midiPlayer->PlayNote(65);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_F)) {
+// 		m_midiPlayer->StopNote(65);
+// 	}
+// 
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_G)) {
+// 		m_midiPlayer->PlayNote(67);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_G)) {
+// 		m_midiPlayer->StopNote(67);
+// 	}
+// 
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_H)) {
+// 		m_midiPlayer->PlayNote(69);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_H)) {
+// 		m_midiPlayer->StopNote(69);
+// 	}
+// 
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_J)) {
+// 		m_midiPlayer->PlayNote(71);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_J)) {
+// 		m_midiPlayer->StopNote(71);
+// 	}
+// 
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_K)) {
+// 		m_midiPlayer->PlayNote(72);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_K)) {
+// 		m_midiPlayer->StopNote(72);
+// 	}
+// 
+// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_L)) {
+// 		m_midiPlayer->PlayNote(74);
+// 	}
+// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_L)) {
+// 		m_midiPlayer->StopNote(74);
+// 	}
+	float cameraRotateSpeed;
+	float cameraSpeed;
+	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_SHIFT)) {
+		cameraRotateSpeed = 0.5f;
+		cameraSpeed = 30.f;
+	}
+	else {
+		cameraRotateSpeed = 0.2f;
+		cameraSpeed = 5.f;
+	}
+
+	Vector3 forward = m_mainCamera3D->m_transform.GetForward();
+	forward.y = 0;
+	forward = forward.GetNormalized();
+	Vector3 right = m_mainCamera3D->m_transform.GetRight();
+	Vector3 up(0.f, 1.f, 0.f);
+
+	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_W)) {
+		m_mainCamera3D->m_transform.Translate(forward * cameraSpeed * ds);
+	}
+	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_S)) {
+		m_mainCamera3D->m_transform.Translate(-forward * cameraSpeed * ds);
+	}
+	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_A)) {
+		m_mainCamera3D->m_transform.Translate(-right * cameraSpeed * ds);
+	}
+	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_D)) {
+		m_mainCamera3D->m_transform.Translate(right * cameraSpeed * ds);
+	}
+	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_Q)) {
+		m_mainCamera3D->m_transform.Translate(-up * cameraSpeed * ds);
+	}
+	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_E)) {
+		m_mainCamera3D->m_transform.Translate(up * cameraSpeed * ds);
+	}
+	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_M)) {
+		if (g_theInput->GetMouseMode() == MOUSEMODE_FREE) {
+			g_theInput->SetMouseMode(MOUSEMODE_SNAP);
+		}
+		else {
+			g_theInput->SetMouseMode(MOUSEMODE_FREE);
+		}
+	}
+	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_R)) {
+		m_mainCamera3D->m_transform.SetWorldMatrix(Matrix44());
+	}
+	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_SPACE)) {
+		SpawnEntity(10.f, m_mainCamera3D->m_transform.GetWorldPosition(), Rgba::GREEN);
+	}
+
+	Vector2 mouseDelta = g_theInput->GetMouseDelta();
+	if (mouseDelta.x != 0.f) {
+		m_mainCamera3D->m_transform.Rotate(Vector3(0.f, 1.f, 0.f) * mouseDelta.x * cameraRotateSpeed);
+	}
+	if (mouseDelta.y != 0.f) {
+		m_mainCamera3D->m_transform.Rotate(Vector3(1.f, 0.f, 0.f) * mouseDelta.y * cameraRotateSpeed);
+	}
+	// Print Camera Position
+	DebugString(0.f, Stringf("Camera Position: (%.2f, %.2f, %.2f)", m_mainCamera3D->m_transform.GetWorldPosition().z, -m_mainCamera3D->m_transform.GetWorldPosition().x, m_mainCamera3D->m_transform.GetWorldPosition().y), Rgba::WHITE, Rgba::WHITE);
+
+	for (auto& e : m_entities) {
+		e->Update(ds);
+	}
+}
+
+//--------------------------------------------------------------------
 void Game::Render() const {
-	//--------------------------------------------------------------------------
 	// Setup render pipeline
 	g_theRHI->GetFontRenderer()->BindOutput(g_mainOutput.get());
 	g_theRHI->GetDevice()->ClearColor(g_mainOutput->GetRTV(), Rgba::MIDNIGHTBLUE);
@@ -218,5 +247,18 @@ void Game::Render() const {
  	g_theRHI->GetImmediateRenderer()->BindCamera(m_mainCamera3D.get());
  	g_theRHI->GetImmediateRenderer()->BindMaterial(g_theResourceManager->GetMaterial("wolf"));
 	g_theRHI->GetImmediateRenderer()->DrawMeshImmediate(g_theResourceManager->GetSkeletalMesh("wolf"));
+
+	for (auto& e : m_entities) {
+		if (!e->m_isDead) {
+			e->Render();
+		}
+	}
+}
+
+Entity* Game::SpawnEntity(float age, const Vector3& pos, const Rgba& color) {
+	Uptr<Entity> newEntity = std::make_unique<Entity>(age, pos, color);
+	Entity* entityPtr = newEntity.get();
+	m_entities.push_back(std::move(newEntity));
+	return entityPtr;
 }
 

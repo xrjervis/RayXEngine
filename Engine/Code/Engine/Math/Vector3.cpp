@@ -157,6 +157,17 @@ Vector3 Vector3::GetNormalized() const {
 	}
 }
 
+void Vector3::SetFromText(const char* text) {
+	char* end;
+	this->x = std::strtof(text, &end);
+	text = end;
+	while (text[0] == ' ' || text[0] == ',') text++;
+	this->y = std::strtof(text, &end);
+	text = end;
+	while (text[0] == ' ' || text[0] == ',') text++;
+	this->z = std::strtof(text, &end);
+}
+
 const Vector3 Interpolate(const Vector3& start, const Vector3& end, float fractionTowardEnd) {
 	fractionTowardEnd = Clamp01(fractionTowardEnd);
 	return (1.f - fractionTowardEnd) * start + fractionTowardEnd * end;
