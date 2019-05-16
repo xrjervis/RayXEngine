@@ -382,6 +382,9 @@
     <ClCompile Include="Core\EventSystem.cpp">
       <Filter>Core\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Core\StackAllocator.cpp">
+      <Filter>Core\Memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\Vector2.hpp">
@@ -779,6 +782,12 @@
     </ClInclude>
     <ClInclude Include="Core\NamedFunctions.hpp">
       <Filter>Core\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\IAllocator.hpp">
+      <Filter>Core\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\StackAllocator.hpp">
+      <Filter>Core\Memory</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

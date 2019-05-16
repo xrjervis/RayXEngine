@@ -410,6 +410,7 @@
     <ClCompile Include="Core\RemoteCommandService.cpp" />
     <ClCompile Include="Core\ResourceManager.cpp" />
     <ClCompile Include="Core\Rgba.cpp" />
+    <ClCompile Include="Core\StackAllocator.cpp" />
     <ClCompile Include="Core\StopWatch.cpp" />
     <ClCompile Include="Core\StringId.cpp" />
     <ClCompile Include="Core\StringUtils.cpp" />
@@ -503,9 +504,11 @@
     <ClInclude Include="Core\Blob.hpp" />
     <ClInclude Include="Core\ecs.hpp" />
     <ClInclude Include="Core\EventSystem.hpp" />
+    <ClInclude Include="Core\IAllocator.hpp" />
     <ClInclude Include="Core\JobSystem.hpp" />
     <ClInclude Include="Core\NamedFunctions.hpp" />
     <ClInclude Include="Core\NamedProperties.hpp" />
+    <ClInclude Include="Core\StackAllocator.hpp" />
     <ClInclude Include="Core\TripleBuffer.hpp" />
     <ClInclude Include="Core\BytePacker.hpp" />
     <ClInclude Include="Core\Camera.hpp" />
