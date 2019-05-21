@@ -391,6 +391,7 @@
     <ClCompile Include="Audio\MIDIPlayer.cpp" />
     <ClCompile Include="Core\Blackboard.cpp" />
     <ClCompile Include="Core\Blob.cpp" />
+    <ClCompile Include="Core\BlockAllocator.cpp" />
     <ClCompile Include="Core\BytePacker.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\Clock.cpp" />
@@ -502,6 +503,7 @@
     <ClInclude Include="Audio\MIDIPlayer.hpp" />
     <ClInclude Include="Core\Blackboard.hpp" />
     <ClInclude Include="Core\Blob.hpp" />
+    <ClInclude Include="Core\BlockAllocator.hpp" />
     <ClInclude Include="Core\ecs.hpp" />
     <ClInclude Include="Core\EventSystem.hpp" />
     <ClInclude Include="Core\IAllocator.hpp" />

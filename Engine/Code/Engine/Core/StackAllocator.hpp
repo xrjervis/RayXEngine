@@ -1,32 +1,17 @@
 #pragma once
 #include "Engine/Core/IAllocator.hpp"
 
-class StackAllocator : public IAllocator {
+class StackAllocator {
 public:
 	StackAllocator(size_t totalSize);
 	virtual ~StackAllocator();
 
-	void* Alloc(size_t size, size_t alignment = 8) override;
-
-	template<typename T>
-	T* Alloc(size_t alignment = 8) {
-
-	}
-
-	void FreeTop();
-	void Clear() override;
+	void* Alloc(size_t size, size_t alignment = 8) ;
+	void Free(void* ptr);  // will free all the way up to the top
+	void Clear() ;
 
 private:
-	void Free(void* ptr) override {}
-
-protected:
+	size_t  m_totalSize = 0;
 	void*	m_basePtr = nullptr;
 	void*	m_topPtr = nullptr;
-	bool	m_isUsed = false;
-
-private:
-	struct Header {
-		size_t lastBlockStart;
-		size_t thisBlockSize;
-	};
 };

@@ -17,6 +17,7 @@
 #include "Engine/Core/NamedFunctions.hpp"
 #include "Engine/Core/NamedProperties.hpp"
 #include "Engine/Core/StackAllocator.hpp"
+#include "Engine/Core/EventSystem.hpp"
 #include "Game/Game.hpp"
 #include "Game/TheApp.hpp"
 #include "Game/Entity.hpp"
@@ -65,103 +66,30 @@ Game::~Game() {
 }
 
 
-
-
 StackAllocator* g_stackAllocator = nullptr;
+
 
 //--------------------------------------------------------------------
 void Game::PostStartup() {
 	g_stackAllocator = new StackAllocator(1024);
+
 	void* block1 = g_stackAllocator->Alloc(14);
 	void* block2 = g_stackAllocator->Alloc(2);
 
-	g_stackAllocator->FreeTop();
-	void* block3 = g_stackAllocator->Alloc(65);
+	g_stackAllocator->Free(block2);
+	void* block3 = g_stackAllocator->Alloc(7);
+	void* block4 = g_stackAllocator->Alloc(10);
 
+	g_stackAllocator->Clear();
 
 	delete g_stackAllocator;
 	g_stackAllocator = nullptr;
-	int x = 0;
-	return;
+
 }
 
 //--------------------------------------------------------------------
 void Game::Update() {
 	float ds = m_gameClock->GetDeltaSeconds();
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_Q)) {
-// 		m_midiPlayer->SwitchInstrument(0);
-// 	}
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_W)) {
-// 		m_midiPlayer->SwitchInstrument(8);
-// 	}
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_E)) {
-// 		m_midiPlayer->SwitchInstrument(24);
-// 	}
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_R)) {
-// 		m_midiPlayer->SwitchInstrument(40);
-// 	}
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_A)) {
-// 		m_midiPlayer->PlayNote(60);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_A)) {
-// 		m_midiPlayer->StopNote(60);
-// 	}
-// 
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_S)) {
-// 		m_midiPlayer->PlayNote(62);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_S)) {
-// 		m_midiPlayer->StopNote(62);
-// 	}
-// 
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_D)) {
-// 		m_midiPlayer->PlayNote(64);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_D)) {
-// 		m_midiPlayer->StopNote(64);
-// 	}
-// 
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_F)) {
-// 		m_midiPlayer->PlayNote(65);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_F)) {
-// 		m_midiPlayer->StopNote(65);
-// 	}
-// 
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_G)) {
-// 		m_midiPlayer->PlayNote(67);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_G)) {
-// 		m_midiPlayer->StopNote(67);
-// 	}
-// 
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_H)) {
-// 		m_midiPlayer->PlayNote(69);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_H)) {
-// 		m_midiPlayer->StopNote(69);
-// 	}
-// 
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_J)) {
-// 		m_midiPlayer->PlayNote(71);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_J)) {
-// 		m_midiPlayer->StopNote(71);
-// 	}
-// 
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_K)) {
-// 		m_midiPlayer->PlayNote(72);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_K)) {
-// 		m_midiPlayer->StopNote(72);
-// 	}
-// 
-// 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_L)) {
-// 		m_midiPlayer->PlayNote(74);
-// 	}
-// 	if (g_theInput->WasKeyJustReleased(InputSystem::KEYBOARD_L)) {
-// 		m_midiPlayer->StopNote(74);
-// 	}
 	float cameraRotateSpeed;
 	float cameraSpeed;
 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_SHIFT)) {
@@ -208,9 +136,15 @@ void Game::Update() {
 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_R)) {
 		m_mainCamera3D->m_transform.SetWorldMatrix(Matrix44());
 	}
+
 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_SPACE)) {
+		g_functionLibrary.Invoke<Entity*>("SpawnEntity", 10.f, m_mainCamera3D->m_transform.GetWorldPosition(), Rgba(0.f, 1.f, 0.f, 1.f));
+
 		SpawnEntity(10.f, m_mainCamera3D->m_transform.GetWorldPosition(), Rgba::GREEN);
+
+		g_theEventSystem->FireEvents("OnButtonPress", 10.f, m_mainCamera3D->m_transform.GetWorldPosition(), Rgba(0.f, 1.f, 0.f, 1.f));
 	}
+
 
 	Vector2 mouseDelta = g_theInput->GetMouseDelta();
 	if (mouseDelta.x != 0.f) {

@@ -1,24 +1,9 @@
 #pragma once
 #include "Engine/Core/type.hpp"
 
-class IAllocator {
-public:
-	IAllocator(size_t totalSize) : m_totalSize(totalSize) {}
-	virtual ~IAllocator() {}
-
-	virtual void* Alloc(size_t size, size_t alignment) = 0;
-	
-	virtual void Free(void* ptr) {
-	}
-	
-	virtual void Clear() { 
-		m_totalSize = 0; 
-	}
-
-protected:
-	size_t m_totalSize = 0;
-
-};
+constexpr u8 PATTERN_ALIGN = 0xFC;
+constexpr u8 PATTERN_ALLOC = 0xFD;
+constexpr u8 PATTERN_FREE = 0xFE;
 
 inline size_t AlignAddress(size_t addr, size_t alignment) {
 	size_t mask = alignment - 1;
@@ -65,5 +50,12 @@ inline void FreeAligned(void* ptr) {
 
 		u8* rawPtr = alignedPtr - shift;
 		delete[] rawPtr;
+	}
+}
+
+inline void FillWithPattern(void* startAddr, size_t size, u8 pattern) {
+	u8* start = (u8*)startAddr;
+	for (size_t i = 0; i < size; ++i) {
+		*(start + i) = pattern;
 	}
 }

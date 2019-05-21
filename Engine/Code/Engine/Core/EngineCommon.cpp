@@ -12,4 +12,4 @@ Uptr<AudioSystem>		g_theAudio;
 Uptr<Profiler>			g_theProfiler;
 Uptr<Logger>			g_theLogger;
 Uptr<ResourceManager>	g_theResourceManager;
-
+NamedFunctions			g_functionLibrary;

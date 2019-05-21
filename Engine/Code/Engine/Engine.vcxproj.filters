@@ -385,6 +385,9 @@
     <ClCompile Include="Core\StackAllocator.cpp">
       <Filter>Core\Memory</Filter>
     </ClCompile>
+    <ClCompile Include="Core\BlockAllocator.cpp">
+      <Filter>Core\Memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\Vector2.hpp">
@@ -787,6 +790,9 @@
       <Filter>Core\Memory</Filter>
     </ClInclude>
     <ClInclude Include="Core\StackAllocator.hpp">
+      <Filter>Core\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\BlockAllocator.hpp">
       <Filter>Core\Memory</Filter>
     </ClInclude>
   </ItemGroup>

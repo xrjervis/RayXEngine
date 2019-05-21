@@ -57,6 +57,8 @@ extern Uptr<Profiler>			g_theProfiler;
 extern Uptr<Logger>				g_theLogger;
 extern Uptr<ResourceManager>	g_theResourceManager;
 
+extern NamedFunctions			g_functionLibrary;
+
 #pragma warning( disable : 4267)
 #pragma warning( disable : 4006)
 
