@@ -1,0 +1,14 @@
+<Script>
+    <SpawnEntity>
+        <float age="10.0" />
+        <float height="10.0" />
+        <Vector3 pos="1, 2, 3" />
+        <Rgba color="255, 0, 0, 0" />
+    </SpawnEntity>
+
+    <TakeDamage>
+        <int EntityID="21"/>
+        <int EntityID="39"/>
+        <float damage="10.0"/>
+    </TakeDamage>
+</Script>

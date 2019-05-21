@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{e1f4e013-6ee6-4706-956f-6a95ffd56c62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{c8fe1d41-3a5d-4293-ad07-dc134735858a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{203fb42e-7b81-4715-afe0-116e1e2797ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\hlsl">
+      <UniqueIdentifier>{927b20ad-77ef-40fd-bb43-0582467fa168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Material">
+      <UniqueIdentifier>{65cda8a0-c1ae-4cf7-a351-a5e573c42e9c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main_Win32.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="TheApp.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="EngineBuildPreferences.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TheApp.hpp">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Run_Win32\Data\Shaders\hlsl\common.hlsli">
+      <Filter>Data\hlsl</Filter>
+    </None>
+    <None Include="..\..\Run_Win32\Data\Materials\debug.mat">
+      <Filter>Data\Material</Filter>
+    </None>
+    <None Include="..\..\Run_Win32\Data\Materials\default.mat">
+      <Filter>Data\Material</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\..\Run_Win32\Data\Shaders\hlsl\default_ps.hlsl">
+      <Filter>Data\hlsl</Filter>
+    </FxCompile>
+    <FxCompile Include="..\..\Run_Win32\Data\Shaders\hlsl\default_vs.hlsl">
+      <Filter>Data\hlsl</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>

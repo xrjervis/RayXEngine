@@ -1,0 +1,5 @@
+<SpriteAnimation 
+    name="morgana_idle"
+    spriteSheet="morgana"
+    duration="4.0"
+    mode="loop"/>

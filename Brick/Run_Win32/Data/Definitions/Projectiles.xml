@@ -1,0 +1,24 @@
+<ProjectileDefinitions>
+  <ProjectileDefinition name="Bow_proj" faction="good" deathTime="2">
+    <Size physicsRadius="0.1" triggerRadius="0.5" localDrawBounds="-0.6,-0.07,0.1,0.07"/>
+    <Tags commaSeparatedTagNames=""/>
+    <Movement>
+      <Fly speed="10"/>
+    </Movement>
+    <SpriteAnimSet spriteSheet="arrow.png" spriteLayout="1,1" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="0"/>
+    </SpriteAnimSet>
+  </ProjectileDefinition>
+
+  <ProjectileDefinition name="Spear_proj" faction="good" deathTime="0.5">
+    <Size physicsRadius="0.1" triggerRadius="0.5" localDrawBounds="-0.6,-0.07,0.1,0.07"/>
+    <Tags commaSeparatedTagNames=""/>
+    <Movement>
+      <Fly speed="5"/>
+    </Movement>
+    <SpriteAnimSet spriteSheet="arrow.png" spriteLayout="1,1" startAnim="Idle" fps="10" isLooping="true">
+      <SpriteAnim name="Idle" spriteIndexes="0"/>
+    </SpriteAnimSet>
+  </ProjectileDefinition>
+
+</ProjectileDefinitions>
