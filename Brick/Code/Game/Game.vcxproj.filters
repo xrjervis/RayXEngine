@@ -30,6 +30,18 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="Entity2d.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Paddle.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineBuildPreferences.hpp">
@@ -42,6 +54,18 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Entity.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity2d.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Paddle.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.hpp">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>

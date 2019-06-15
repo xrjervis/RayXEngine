@@ -431,6 +431,7 @@
     <ClCompile Include="Math\IntVector3.cpp" />
     <ClCompile Include="Math\MathUtils.cpp" />
     <ClCompile Include="Math\Matrix44.cpp" />
+    <ClCompile Include="Math\OBB2.cpp" />
     <ClCompile Include="Math\Plane.cpp" />
     <ClCompile Include="Math\RawNoise.cpp" />
     <ClCompile Include="Math\Ray.cpp" />
@@ -553,6 +554,7 @@
     <ClInclude Include="Math\IntVector3.hpp" />
     <ClInclude Include="Math\MathUtils.hpp" />
     <ClInclude Include="Math\Matrix44.hpp" />
+    <ClInclude Include="Math\OBB2.hpp" />
     <ClInclude Include="Math\OBB3.hpp" />
     <ClInclude Include="Math\Plane.hpp" />
     <ClInclude Include="Math\RawNoise.hpp" />

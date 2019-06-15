@@ -19,6 +19,7 @@ public:
 	void AddLine(const Vector3& startPos, const Vector3& endPos, const Rgba& color = Rgba::WHITE);
 	void AddQuad(const Vector2& position, const Vector2& pivot, float width, float height, const Rgba& color = Rgba::WHITE); // a 2d screen space quad, differed from plane
 	void AddQuad(const Vector2& position, const Vector2& pivot, float width, float height, const AABB2& uv = AABB2(), const Rgba& color = Rgba::WHITE); // a 2d screen space quad, differed from plane
+	void AddOBB2D(const Vector2& position, const Vector2& rightVector, const Vector2& upVector, float halfWidth, float halfHeight, const AABB2& uv = AABB2(), const Rgba& color = Rgba::WHITE);
 	void AddDisc2D(const Vector2& center, float radius, const Rgba& color = Rgba::WHITE);
 	void AddDashedCircle2D(const Vector2& center, float radius, const Rgba& color = Rgba::WHITE);
 
@@ -48,6 +49,7 @@ public:
 	std::unique_ptr<Buffer>			m_indexBuffer;
 	std::unique_ptr<InputLayout>	m_inputLayout;
 };
+
 
 
 template<typename VertType>
@@ -117,6 +119,30 @@ void Mesh<VertType>::AddQuad(const Vector2& position, const Vector2& pivot, floa
 	Vector3 tr = tl + Vector3(width, 0.f, 0.f);
 	Vector3 bl = tl + Vector3(0.f, -height, 0.f);
 	Vector3 br = bl + Vector3(width, 0.f, 0.f);
+
+	Vector4 c = color.GetAsFloats();
+
+	Vector2 tl_uv(uv.mins.x, uv.mins.y);
+	Vector2 tr_uv(uv.maxs.x, uv.mins.y);
+	Vector2 bl_uv(uv.mins.x, uv.maxs.y);
+	Vector2 br_uv(uv.maxs.x, uv.maxs.y);
+
+	u32 vertCount = (u32)m_vertices.size();
+	m_vertices.emplace_back(bl, c, bl_uv);
+	m_vertices.emplace_back(br, c, br_uv);
+	m_vertices.emplace_back(tl, c, tl_uv);
+	m_vertices.emplace_back(tr, c, tr_uv);
+
+	m_triangles.push_back({ vertCount + 0, vertCount + 1, vertCount + 2 });
+	m_triangles.push_back({ vertCount + 1, vertCount + 3, vertCount + 2 });
+}
+
+template<typename VertType>
+void Mesh<VertType>::AddOBB2D(const Vector2& position, const Vector2& rightVector, const Vector2& upVector, float halfWidth, float halfHeight, const AABB2& uv /*= AABB2()*/, const Rgba& color /*= Rgba::WHITE*/) {
+	Vector3 tr = position + rightVector * halfWidth + upVector * halfHeight;
+	Vector3 tl = tr + rightVector * (-halfWidth * 2.f);
+	Vector3 bl = tl + upVector * (-halfHeight * 2.f);
+	Vector3 br = bl + rightVector * (halfWidth * 2.f);
 
 	Vector4 c = color.GetAsFloats();
 

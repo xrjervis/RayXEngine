@@ -60,7 +60,7 @@ void Window::CreateAndShowWindow() {
 
 	float fractionToDesktop;
 	if (m_mode == WINDOW_MODE_WINDOWED) {
-		fractionToDesktop = 0.8f;
+		fractionToDesktop = 0.9f;
 	}
 	else {
 		fractionToDesktop = 1.0f;

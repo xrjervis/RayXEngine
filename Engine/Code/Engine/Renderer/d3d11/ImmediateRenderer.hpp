@@ -51,6 +51,7 @@ public:
 	void DrawLineBox2D(const AABB2& boxBounds, const Rgba& color = Rgba::WHITE);
 	void DrawQuad2D(const Vector2& position, const Vector2& pivot, const Vector2& size, const AABB2& uv, const Rgba& color = Rgba::WHITE);
 	void DrawQuad2D(const Vector2& position, const Vector2& pivot, const Vector2& size, const Rgba& color = Rgba::WHITE);
+	void DrawOBB2D(const Vector2& position, const Vector2& rightVector, const Vector2& upVector, const Vector2& halfExtensions, const Rgba& color = Rgba::WHITE);
 	void DrawDisc2D(const Vector2& center, float radius, const Rgba& color = Rgba::WHITE);
 	void DrawDashedCircle2D(const Vector2& center, float radius, const Rgba& color = Rgba::WHITE);
 	void DrawPoint3D(const Vector3& center, const Rgba& color = Rgba::WHITE);

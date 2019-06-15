@@ -58,6 +58,12 @@ void ImmediateRenderer::DrawQuad2D(const Vector2& position, const Vector2& pivot
 	DrawMeshImmediate(&quad);
 }
 
+void ImmediateRenderer::DrawOBB2D(const Vector2& position, const Vector2& rightVector, const Vector2& upVector, const Vector2& halfExtensions, const Rgba& color /*= Rgba::WHITE*/) {
+	Mesh<VertexPCU> quad(PRIMITIVE_TYPE_TRIANGLELIST, true);
+	quad.AddOBB2D(position, rightVector, upVector, halfExtensions.x, halfExtensions.y, AABB2(), color);
+	DrawMeshImmediate(&quad);
+}
+
 void ImmediateRenderer::DrawDisc2D(const Vector2& center, float radius, const Rgba& color /*= Rgba::WHITE*/) {
 	Mesh<VertexPCU> mesh(PRIMITIVE_TYPE_TRIANGLELIST, false);
 	mesh.AddDisc2D(center, radius, color);

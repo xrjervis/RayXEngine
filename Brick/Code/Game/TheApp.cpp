@@ -15,6 +15,7 @@
 #include "Engine/Profiler/ProfileScope.hpp"
 #include "Engine/Profiler/Profiler.hpp"
 #include "Engine/Math/Matrix44.hpp"
+#include "Engine/Core/EventSystem.hpp"
 #include "Game/TheApp.hpp"
 #include "ThirdParty/pugixml/pugixml.hpp"
 
@@ -22,10 +23,8 @@ Uptr<TheApp> g_theApp;
 Uptr<RHIOutput> g_mainOutput;
 Uptr<Blackboard> g_gameConfig;
 
-constexpr WCHAR* mainWindowTitle = L"Protogame3D";
-constexpr float mainWindowAspect = 16.f / 9.f;
-constexpr float mainWindowFractionToDesktop = 0.8f;
-constexpr float mainWindowHeight = mainWindowFractionToDesktop * 1080.f;
+constexpr WCHAR* mainWindowTitle = L"Juicy Bricks";
+constexpr float mainWindowAspect = 1.f;
 
 #pragma region Engine Commands
 static bool Command_Quit(Command& cmd) {
@@ -145,6 +144,7 @@ TheApp::~TheApp() {
 	g_theInput.reset();
 	g_theResourceManager.reset();
 	g_theRHI.reset(); 
+	g_theEventSystem.reset();
 	g_theLogger.reset();
 	g_theDebugDrawSystem.reset();
 	g_theMasterClock.reset();
@@ -154,6 +154,7 @@ TheApp::TheApp() {
 	g_theMasterClock = std::make_unique<Clock>();
 	g_theLogger = std::make_unique<Logger>();
 	g_theRHI = std::make_unique<RHIInstance>();
+	g_theEventSystem = std::make_unique<EventSystem>();
 
 	// Create the main window
 	g_mainOutput = g_theRHI->GetDevice()->CreateOutput(mainWindowTitle, WINDOW_MODE_WINDOWED, mainWindowAspect);
@@ -263,7 +264,7 @@ void TheApp::Render() const {
 	m_game->Render();
 
 	// Debug draw system
-	g_theDebugDrawSystem->Render3D();
+	//g_theDebugDrawSystem->Render3D();
 	g_theDebugDrawSystem->Render2D();
 
 	if (g_theProfiler->IsOpen() && g_theProfiler->GetFrameSize() > 1) {

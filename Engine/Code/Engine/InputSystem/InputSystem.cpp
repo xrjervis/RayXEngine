@@ -65,7 +65,7 @@ const u8 InputSystem::MOUSE_RIGHT =				2;
 //
 void RunMessagePump() {
 	MSG queuedMessage;
-	for (;; ) {
+	while(true) {
 		const BOOL wasMessagePresent = PeekMessage(&queuedMessage, nullptr, 0, 0, PM_REMOVE);
 		if (!wasMessagePresent) {
 			break;

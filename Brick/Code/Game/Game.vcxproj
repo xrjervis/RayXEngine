@@ -326,9 +326,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Entity2d.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main_Win32.cpp" />
+    <ClCompile Include="Paddle.cpp" />
     <ClCompile Include="TheApp.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -337,9 +341,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ball.hpp" />
+    <ClInclude Include="Brick.hpp" />
     <ClInclude Include="EngineBuildPreferences.hpp" />
     <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Entity2d.hpp" />
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Paddle.hpp" />
     <ClInclude Include="TheApp.hpp" />
   </ItemGroup>
   <ItemGroup>
