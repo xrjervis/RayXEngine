@@ -1262,24 +1262,34 @@ void World::ApplyNewtonianPhysics(float ds) {
 	// Apply gravity in Z direction
 	m_player->m_acceleration.z = -9.8f;
 	DebugString(0.f, Stringf("Acceleration: %.2f, %.2f, %.2f", m_player->m_acceleration.x, m_player->m_acceleration.y, m_player->m_acceleration.z), Rgba::CYAN, Rgba::CYAN);
-	// Add velocity
-	m_player->m_velocity += m_player->m_acceleration * ds;
 
 	// Apply friction
 	if (m_player->m_isOnGround) {
-		Vector2 v = m_player->m_velocity.xy();
-		float l = v.GetLength() * 0.99f;
-		v = v.GetNormalized() * l;
-		m_player->m_velocity.x = v.x;
-		m_player->m_velocity.y = v.y;
+		float u = 0.01f;
+		float N = 1.f;
+		Vector3 v = m_player->m_velocity.GetNormalized();
+		m_player->m_acceleration += -1.f * u * N * v;
 	}
 
-	// Clamp velocity magnitude in Z axis
-	m_player->m_velocity.z = ClampFloat(m_player->m_velocity.z, -10.f, 10.f);
+	// Apply air drag force
+	{
+		float c = 0.1f;
+		float squaredV = m_player->m_velocity.GetLengthSquared();
+		Vector3 v = m_player->m_velocity.GetNormalized();
+		m_player->m_acceleration += -1.f * squaredV * c * v;
+	}
 
+
+	// Add velocity
+	m_player->m_velocity += m_player->m_acceleration * ds;
+	DebugString(0.f, Stringf("Speed: %.2f", m_player->m_velocity.GetLength()), Rgba::CYAN, Rgba::CYAN);
+
+
+	// Translate player
 	Vector3 velocityInEngine(-m_player->m_velocity.y, m_player->m_velocity.z, m_player->m_velocity.x);
 	m_player->m_transform.Translate(velocityInEngine * ds);
 
+	// Debug velocity
 	Vector3 playerPositionInEngine = m_player->m_transform.GetWorldPosition();
 	Vector3 playerPosition(playerPositionInEngine.z, -playerPositionInEngine.x, playerPositionInEngine.y);
 	DebugDrawLine3D(0.f, playerPosition, playerPosition + m_player->m_velocity, Rgba::YELLOW, Rgba::YELLOW);

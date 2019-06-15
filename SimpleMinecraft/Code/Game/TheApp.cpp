@@ -199,28 +199,6 @@ void TheApp::PostStartUp() {
 	Uptr<TestJob> testJob2 = std::make_unique<TestJob>(3.f);
 	g_theJobSystem->QueueJob(std::move(testJob1));
 	g_theJobSystem->QueueJob(std::move(testJob2));
-	//--------------------------------------------------------------------
-
-	//--------------------------------------------------------------------
-	// Test event
-
-
-// 	NamedFunction<bool(const NamedProperties&)> standaloneFunc("TestStandaloneFunction", TestStandaloneFunction);
-// 	NamedFunction<bool(const NamedProperties&)> memberMethod("TheApp::TestMemberMethod", std::bind(&TheApp::TestMemberMethod, this, std::placeholders::_1));
-// 
-// 	g_theEventSystem->Subscribe("TestEvent", standaloneFunc);
-// 	g_theEventSystem->Subscribe("TestEvent", memberMethod);
-// 	g_theEventSystem->UnSubscribe("TestEvent", memberMethod);
-
-	g_theEventSystem->m_namedFunctions.Register("TestStandaloneFunction", new NamedFunction<bool()>(TestStandaloneFunction));
-	g_theEventSystem->m_namedFunctions.Register("TestMemberMethod", new NamedFunction<bool()>(std::bind(&TheApp::TestMemberMethod, this)));
-
-	g_theEventSystem->Subscribe("OnButtonHit", "TestStandaloneFunction");
-	g_theEventSystem->Subscribe("OnButtonHit", "TestMemberMethod");
-
-// 	bool result = nfs.Invoke<bool>("TestStandaloneFunction", NamedProperties());
-// 	result = nfs.Invoke<bool>("TestStandaloneFunction");
-// 	result = nfs.Invoke<bool>("TestMemberMethod", NamedProperties());
 
 	//--------------------------------------------------------------------
 

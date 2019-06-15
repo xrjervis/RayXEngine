@@ -25,28 +25,33 @@ void Player::Update(float ds) {
 
 	Vector3 up(0.f, 0.f, 1.f);
 
-	float speedXY;
+	float mass = 1.f;
+	float force;
 	if (m_isOnGround) {
-		speedXY = 5.f;
+		force = 5.f;
 	}
 	else {
-		speedXY = 2.f;
+		force = 2.f;
 	}
 
-	m_acceleration = Vector3::ZERO;
+
+	Vector3 direction = Vector3::ZERO;
 
 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_W)) {
-		m_acceleration += forward * speedXY;
+		direction += forward;
 	}
 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_S)) {
-		m_acceleration += -forward * speedXY;
+		direction += -forward;
 	}
 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_A)) {
-		m_acceleration += -right * speedXY;
+		direction += -right;
 	}
 	if (g_theInput->IsKeyPressed(InputSystem::KEYBOARD_D)) {
-		m_acceleration += right * speedXY;
+		direction += right;
 	}
+	direction = direction.GetNormalized();
+
+	m_acceleration = (force * direction) / mass;
 
 	if (g_theInput->WasKeyJustPressed(InputSystem::KEYBOARD_SPACE)) {
 		if (m_isOnGround) {
