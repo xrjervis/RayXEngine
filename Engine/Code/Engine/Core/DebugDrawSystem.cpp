@@ -1,6 +1,7 @@
 #include "Engine/Core/EngineCommon.hpp"
 #include "Engine/Core/DebugDrawSystem.hpp"
 #include "Engine/Core/Camera.hpp"
+#include "Engine/Core/ResourceManager.hpp"
 #include "Engine/Renderer/d3d11/RHIInstance.hpp"
 #include "Engine/Renderer/d3d11/ImmediateRenderer.hpp"
 #include "Engine/Renderer/d3d11/FontRenderer.hpp"
@@ -162,7 +163,7 @@ void DebugDrawSystem::Render2D() const {
 }
 
 void DebugDrawSystem::Render3D() const {
-	g_theRHI->GetImmediateRenderer()->BindMaterial(nullptr);
+	g_theRHI->GetImmediateRenderer()->BindMaterial(g_theResourceManager->GetMaterial("debug"));
 	g_theRHI->GetImmediateRenderer()->BindCamera(m_camera3D);
 	for (size_t i = 0; i < MAX_DEBUG_OBJECTS; ++i) {
 		DebugObject* obj3d = m_debugObjects3D[i].get();

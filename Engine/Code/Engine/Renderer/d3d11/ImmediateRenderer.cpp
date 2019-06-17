@@ -208,6 +208,11 @@ void ImmediateRenderer::DrawMeshImmediate(SkeletalMesh* sMesh) {
 	m_device->Draw(sMesh->m_vertices.size());
 }
 
+void ImmediateRenderer::DrawSkybox() {
+	BindMaterial(g_theResourceManager->GetMaterial("skybox"));
+	DrawUVSphere(m_camera->m_transform.GetWorldPosition(), 30.f, 24, 24, Rgba::WHITE);
+}
+
 void ImmediateRenderer::SetSkyColor(const Rgba& color) {
 	Vector4 c = color.GetAsFloats();
 	m_globals.skyColor = c.xyz();

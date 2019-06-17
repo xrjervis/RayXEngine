@@ -91,6 +91,11 @@ public:
 	void DrawMeshImmediate(SkeletalMesh* sMesh);
 
 	//--------------------------------------------------------------------
+	// Draw Skybox
+	//-------------------------------------------------------------------- 
+	void DrawSkybox();
+
+	//--------------------------------------------------------------------
 	// Set global constants
 	void SetSkyColor(const Rgba& color);
 	void SetIndoorColor(const Rgba& color);

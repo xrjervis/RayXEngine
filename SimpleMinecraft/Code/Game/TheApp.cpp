@@ -237,16 +237,20 @@ void TheApp::LoadDefaultAssets() {
 	g_theResourceManager->LoadTexture2D("terrain_diffuse", "Data/Images/terrain_diffuse.png");
 	g_theResourceManager->LoadTexture2D("terrain_normal", "Data/Images/terrain_normal.png");
 	g_theResourceManager->LoadTexture2D("test_opengl", "Data/Images/test_opengl.png");
+	g_theResourceManager->LoadTexture2D("skybox_bluesky", "Data/Images/skybox_galaxy.png");
 	g_theResourceManager->LoadSpriteSheet("terrain_32x32", "Data/Images/terrain_32x32.png", IntVector2(32, 32));
 
 	g_theResourceManager->LoadShaderProgram("default_vs", "Data/Shaders/hlsl/default_vs.hlsl", SHADER_TYPE_VERTEX_SHADER);
 	g_theResourceManager->LoadShaderProgram("default_ps", "Data/Shaders/hlsl/default_ps.hlsl", SHADER_TYPE_PIXEL_SHADER);
 	g_theResourceManager->LoadShaderProgram("smc_vs", "Data/Shaders/hlsl/smc_vs.hlsl", SHADER_TYPE_VERTEX_SHADER);
 	g_theResourceManager->LoadShaderProgram("smc_ps", "Data/Shaders/hlsl/smc_ps.hlsl", SHADER_TYPE_PIXEL_SHADER);
+	g_theResourceManager->LoadShaderProgram("skybox_vs", "Data/Shaders/hlsl/skybox_vs.hlsl", SHADER_TYPE_VERTEX_SHADER);
+	g_theResourceManager->LoadShaderProgram("skybox_ps", "Data/Shaders/hlsl/skybox_ps.hlsl", SHADER_TYPE_PIXEL_SHADER);
 	g_theResourceManager->LoadMaterial("default", "Data/Materials/default.mat");
 	g_theResourceManager->LoadMaterial("smc", "Data/Materials/smc.mat");
 	g_theResourceManager->LoadMaterial("debug", "Data/Materials/debug.mat");
 	g_theResourceManager->LoadMaterial("wireframe", "Data/Materials/wireframe.mat");
+	g_theResourceManager->LoadMaterial("skybox", "Data/Materials/skybox.mat");
 
 }
 

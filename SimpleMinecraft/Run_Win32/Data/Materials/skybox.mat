@@ -1,0 +1,12 @@
+<Material name="skybox">
+    <int name="useDiffuse" value="1"/>
+    <int name="useNormal" value="0"/>
+    <int name="useSpecular" value="0"/>
+    <int name="useLighting" value="0"/>
+    <Texture name="diffuse" value="skybox_bluesky" sampler="linear"/>
+    <ShaderProgram name="vertexShader" value="skybox_vs"/>
+    <ShaderProgram name="pixelShader" value="skybox_ps"/>
+    <RasterizerState fill="solid" cull="none" frontCounterClockwise="true"/>
+    <BlendState blendSrc="src_alpha" blendDst="inv_src_alpha" blendOp="add"/>
+    <DepthStencilState depthTestEnable="false" depthTestComapre="less_equal"/>
+</Material>
