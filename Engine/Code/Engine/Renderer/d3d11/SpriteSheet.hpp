@@ -26,10 +26,10 @@ public:
 
 
 public:
-	Texture2D*	m_texture = nullptr;
-	IntVector2	m_layout;
-	float		m_unitUVWidth = 1.f;
-	float		m_unitUVHeight = 1.f;
+	Texture2D*			m_texture = nullptr;
+	IntVector2			m_layout;
+	float				m_unitUVWidth = 1.f;
+	float				m_unitUVHeight = 1.f;
 };
 
 inline AABB2 SpriteSheet::GetUVFromIndex(int idx) const {

@@ -17,7 +17,3 @@ void Entity2d::Update(float ds) {
 	}
 }
 
-void Entity2d::Render() const {
-
-}
-

@@ -12,7 +12,3 @@ void Brick::Update(float ds) {
 
 }
 
-void Brick::Render() const {
-
-}
-

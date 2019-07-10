@@ -113,6 +113,14 @@ void InputSystem::OnMouseReleased(u8 keyCode) {
 	m_mouseStates[keyCode].m_wasKeyJustReleased = true;
 }
 
+void InputSystem::OnMouseScrollUp() {
+	m_isMouseScrolledUpThisFrame = true;
+}
+
+void InputSystem::OnMouseScrollDown() {
+	m_isMouseScrolledDownThisFrame = true;
+}
+
 bool InputSystem::IsKeyPressed(u8 keyCode) const {
 	return m_keyStates[keyCode].m_isKeyPressed;
 }
@@ -135,6 +143,14 @@ bool InputSystem::WasMouseJustPressed(u8 keyCode) const {
 
 bool InputSystem::WasMouseJustReleased(u8 keyCode) const {
 	return m_mouseStates[keyCode].m_wasKeyJustReleased;
+}
+
+bool InputSystem::WasMouseJustScrolledUp() const {
+	return m_isMouseScrolledUpThisFrame;
+}
+
+bool InputSystem::WasMouseJustScrolledDown() const {
+	return m_isMouseScrolledDownThisFrame;
 }
 
 u8 InputSystem::GetKeyCodeFromName(const std::string& name) const {
@@ -257,6 +273,9 @@ eMouseMode InputSystem::GetMouseMode() const {
 }
 
 void InputSystem::UpdateMouse() {
+	m_isMouseScrolledUpThisFrame = false;
+	m_isMouseScrolledDownThisFrame = false;
+
 	m_mousePosLastFrame = m_mousePosThisFrame;
 	HWND hwnd = (HWND)::GetActiveWindow();
 	m_mousePosThisFrame = GetMouseClientPos(hwnd);

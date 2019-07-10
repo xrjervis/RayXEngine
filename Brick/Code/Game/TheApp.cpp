@@ -23,8 +23,8 @@ Uptr<TheApp> g_theApp;
 Uptr<RHIOutput> g_mainOutput;
 Uptr<Blackboard> g_gameConfig;
 
-constexpr WCHAR* mainWindowTitle = L"Juicy Bricks";
-constexpr float mainWindowAspect = 1.f;
+constexpr WCHAR* mainWindowTitle = L"TileMap";
+constexpr float mainWindowAspect = 16.f / 9.f;
 
 #pragma region Engine Commands
 static bool Command_Quit(Command& cmd) {
@@ -112,6 +112,8 @@ static bool Command_LogTest(Command& cmd) {
 bool WinMsgHandler(unsigned int msg, size_t wparam, size_t lparam) {
 	UNUSED(lparam);
 	unsigned char keyCode = (unsigned char)wparam;
+	short wheelDelta = GET_WHEEL_DELTA_WPARAM(wparam);
+
 	switch (msg) {
 	case WM_CLOSE:
 	case WM_QUIT:
@@ -133,6 +135,10 @@ bool WinMsgHandler(unsigned int msg, size_t wparam, size_t lparam) {
 		g_theInput->OnMouseReleased(InputSystem::MOUSE_LEFT);			return true;
 	case WM_RBUTTONUP:
 		g_theInput->OnMouseReleased(InputSystem::MOUSE_RIGHT);			return true;
+	case WM_MOUSEWHEEL:
+		if (wheelDelta == WHEEL_DELTA) g_theInput->OnMouseScrollUp();
+		else if (wheelDelta == -WHEEL_DELTA) g_theInput->OnMouseScrollDown();
+		return true;
 	default: return true;
 	};
 };

@@ -37,7 +37,8 @@ void Window::RegisterWindowClass() {
 	// Define a window style/class
 	WNDCLASSEX wcex = {};
 	wcex.cbSize = sizeof(WNDCLASSEX);
-	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	// A window must belong to a window class that has the CS_DBLCLKS class style
+	wcex.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW; 
 	wcex.lpfnWndProc = WndProc;
 	wcex.hInstance = (HINSTANCE)m_hInst;
 	wcex.hIcon = ::LoadIcon((HINSTANCE)m_hInst, (LPCTSTR)IDI_WINLOGO);

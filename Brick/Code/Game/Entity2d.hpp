@@ -1,13 +1,14 @@
 #pragma once
 #include "Engine/Math/Vector2.hpp"
 
+class Sprite;
+
 class Entity2d {
 public:
 	Entity2d();
-	~Entity2d();
+	virtual ~Entity2d();
 
-	void Update(float ds);
-	void Render() const;
+	virtual void Update(float ds);
 
 public:
 	Vector2		m_position;
@@ -16,4 +17,6 @@ public:
 	Vector2		m_halfSize;
 	float		m_isAlive = true;
 	float		m_age = 0.f;
+
+	Sprite*		m_sprite = nullptr;
 };

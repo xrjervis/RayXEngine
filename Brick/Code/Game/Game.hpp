@@ -1,18 +1,14 @@
 #pragma once
-#include "Engine/Math/Vector3.hpp"
-#include "Engine/Core/Rgba.hpp"
+#include "Game/TileMap.hpp"
+#include "Game/CollisionMap.hpp"
 #include "Engine/Core/type.hpp"
 #include <vector>
+#include <unordered_map>
 
 class TheApp;
 class Clock;
 class Camera;
-class Manager;
 class MIDIPlayer;
-class Entity;
-class Brick;
-class Ball;
-class Paddle;
 
 
 class Game {
@@ -21,19 +17,23 @@ public:
 	~Game();
 
 	void PostStartup();
-
 	void Update();
 	void Render() const;
 
+	void LoadTileMap(const std::string& filePath);
+	void LoadCollisionMap(const std::string& filePath);
+
+	void UpdateInput();
+
+	void DebugDrawGrids() const;
+
 public:
 	// game clock
-	Uptr<Clock>				m_gameClock;
-	Uptr<Camera>			m_mainCamera2D;
-	//Uptr<Camera>	m_mainCamera3D;
+	Uptr<Clock>										m_gameClock;
+	Uptr<Camera>									m_mainCamera2D;
+	//Uptr<Camera>									m_mainCamera3D;
+	Uptr<MIDIPlayer>								m_midiPlayer;
 
-	Uptr<MIDIPlayer>		m_midiPlayer;
-
-	std::vector<Brick*>	m_bricks;
-	Ball*				m_ball = nullptr;
-	Paddle*				m_paddle = nullptr;
+	std::unordered_map<std::string, TileMap>		m_tileMaps;
+	std::unordered_map<std::string, CollisionMap>	m_collisionMaps;
 };

@@ -6,7 +6,7 @@ public:
 	Paddle();
 	~Paddle();
 
-	void	Update(float ds) ;
+	void	Update(float ds) override;
 	void	Render() const ;
 
 };

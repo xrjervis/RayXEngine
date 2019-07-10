@@ -20,6 +20,8 @@ public:
 	void OnKeyReleased(u8 keyCode);
 	void OnMousePressed(u8 keyCode);
 	void OnMouseReleased(u8 keyCode);
+	void OnMouseScrollUp();
+	void OnMouseScrollDown();
 
 	bool IsKeyPressed(u8 keyCode) const;
 	bool WasKeyJustPressed(u8 keyCode) const;
@@ -28,6 +30,8 @@ public:
 	bool IsMousePressed(u8 keyCode) const;
 	bool WasMouseJustPressed(u8 keyCode) const;
 	bool WasMouseJustReleased(u8 keyCode) const;
+	bool WasMouseJustScrolledUp() const;
+	bool WasMouseJustScrolledDown() const;
 
 	u8	 GetKeyCodeFromName(const std::string& name) const;
 
@@ -116,4 +120,7 @@ protected:
 	Vector2 m_mousePosThisFrame = Vector2::ZERO;
 	Vector2 m_mousePosLastFrame = Vector2::ZERO;
 	eMouseMode m_mouseMode;
+
+	bool m_isMouseScrolledUpThisFrame = false;
+	bool m_isMouseScrolledDownThisFrame = false;
 };

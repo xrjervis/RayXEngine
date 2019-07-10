@@ -42,6 +42,15 @@
     <ClCompile Include="Ball.cpp">
       <Filter>Game</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionMap.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EngineBuildPreferences.hpp">
@@ -66,6 +75,15 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="Ball.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.hpp">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionMap.hpp">
       <Filter>Game</Filter>
     </ClInclude>
   </ItemGroup>
